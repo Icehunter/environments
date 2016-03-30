@@ -1,0 +1,47 @@
+[core]
+	editor = vim
+	excludesfile = ~/.gitignore_global
+	ignorecase = true
+[color]
+	ui = true
+	diff = true
+	status = true
+	interactive = true
+[difftool "Kaleidoscope"]
+	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+[difftool]
+	prompt = false
+[mergetool "Kaleidoscope"]
+	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+	trustexitcode = true
+[mergetool]
+	prompt = false
+[user]
+	name = Ryan Wilson
+	email = syndicated.life@gmail.com
+[filter "media"]
+	required = true
+	clean = git media clean %f
+	smudge = git media smudge %f
+[credential]
+	helper = osxkeychain
+[pull]
+	rebase = true
+[push]
+	default = tracking
+[merge]
+	tool = Kaleidoscope
+[diff]
+	tool = Kaleidoscope
+[gc]
+	auto = 1
+[filter "hawser"]
+	clean = git hawser clean %f
+	smudge = git hawser smudge %f
+	required = true
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
+[alias]
+	flat = "!f(){ git reset --soft HEAD~${1} && git commit --edit -m\"$(git log --format=%B --reverse HEAD..HEAD@{1})\"; };f"
