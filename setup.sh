@@ -38,8 +38,16 @@ if [[ ! -f ~/.gitignore_global ]]; then
   ln -sfv ${PWD}/.gitignore_global ~/.gitignore_global
 fi
 
+if [[ ! -f ~/.tern-config ]]; then
+  ln -sfv ${PWD}/.tern-config ~/.tern-config
+fi
+
 if [[ ! -f ~/.vimrc ]]; then
   ln -sfv ${PWD}/.vimrc ~/.vimrc
+fi
+
+if [[ ! -f ~/.vimrc.local ]]; then
+  ln -sfv ${PWD}/.vimrc.local ~/.vimrc.local
 fi
 
 if [[ ! -f ~/.zshrc ]]; then

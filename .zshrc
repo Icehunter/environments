@@ -80,6 +80,7 @@ alias atom="atom ."
 alias finder="open ."
 alias tower="gittower ."
 alias pweb="python -m SimpleHTTPServer"
+alias npmc="npm --userconfig=~/.npmrccorp"
 
 # force spotlight re-index
 alias si="sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist && sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist"

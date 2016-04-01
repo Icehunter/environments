@@ -165,10 +165,9 @@ set number
 
 let no_buffers_menu=1
 if !exists('g:not_finsh_neobundle')
-  colorscheme icehunter
+  colorscheme molokai
 endif
 
-set mouse=a
 set mousemodel=popup
 set t_Co=256
 set cursorline

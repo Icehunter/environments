@@ -9,8 +9,8 @@ local LF=$'\n'
 ### Git
 local BRANCH_ICON="\ue0a0"
 
-ZSH_THEME_GIT_PROMPT_PREFIX="${ORANGE}[%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_SUFFIX="$ORANGE]%{$reset_color%}"
+ZSH_THEME_GIT_PROMPT_PREFIX="${ORANGE}["
+ZSH_THEME_GIT_PROMPT_SUFFIX="$ORANGE]"
 ZSH_THEME_GIT_PROMPT_CLEAN=""
 ZSH_THEME_GIT_PROMPT_AHEAD=""
 ZSH_THEME_GIT_PROMPT_BEHIND=""
@@ -55,7 +55,7 @@ icehunter_git_branch () {
 icehunter_git_status () {
   if icehunter_is_repo; then
     local GIT_INDEX="$(git status --porcelain -b 2> /dev/null)"
-    local STASHED=$(git stash list -n1 2> /dev/null | wc -l | sed -e 's/^[ \t]*//')
+    local STASHED=$(git stash list 2> /dev/null | wc -l | sed -e 's/^[ \t]*//')
 
     local REPO_STATUS=""
     local INDEXED=""
@@ -124,19 +124,25 @@ icehunter_git_status () {
 
 icehunter_git_prompt () {
   if icehunter_is_repo; then
-    echo "$(icehunter_git_branch)$(icehunter_git_status)"
+    echo "%{$reset_color%}$(icehunter_git_branch)%{$reset_color%}$(icehunter_git_status)%{$reset_color%}"
+  else
+    echo "%{$reset_color%}"
   fi
 }
 
 icehunter_git_prompt_short () {
   if icehunter_is_repo; then
-    echo "$(icehunter_git_status)"
+    echo "%{$reset_color%}$(icehunter_git_status)%{$reset_color%}"
+  else
+    echo "%{$reset_color%}"
   fi
 }
 
 icehunter_git_prompt_wrapped () {
   if icehunter_is_repo; then
-    echo "$ZSH_THEME_GIT_PROMPT_PREFIX$(icehunter_git_branch)$(icehunter_git_status)$ZSH_THEME_GIT_PROMPT_SUFFIX"
+    echo "%{$reset_color%}$ZSH_THEME_GIT_PROMPT_PREFIX%{$reset_color%}$(icehunter_git_branch)%{$reset_color%}$(icehunter_git_status)%{$reset_color%}$ZSH_THEME_GIT_PROMPT_SUFFIX%{$reset_color%}"
+  else
+    echo "%{$reset_color%}"
   fi
 }
 
@@ -164,7 +170,7 @@ icehunter_shorten_path () {
 }
 
 ### Prompt
-local PROMPT_STATUS="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )"
+local PROMPT_STATUS="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )%{$reset_color%}"
 
-PROMPT='${PROMPT_STATUS} %{$fg[yellow]%}%~%{$reset_color%} $(icehunter_git_prompt_wrapped)${LF} ↳ '
+PROMPT='${PROMPT_STATUS} %{$fg[yellow]%}%~ $(icehunter_git_prompt_wrapped)${LF} ↳ '
 RPROMPT=""
