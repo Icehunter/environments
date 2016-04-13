@@ -1,5 +1,4 @@
 # environments
-
 Ensure Xcode and Command Line Utilities are installed.
 
 Setup the main dotfiles and configurations
@@ -17,3 +16,9 @@ To use a case-sensitive drive instead of the default on OSX you can create a spa
 ```
 
 The script will make a new folder/mapped drive called ~/GitHub.
+
+## Screens
+### vim colorscheme:
+![vim colorscheme](screenshots/colorscheme.png)
+### zsh git-prompt:
+![zsh git-prompt](screenshots/git-prompt.png)
