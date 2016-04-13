@@ -1,0 +1,88 @@
+"*":
+  "activate-power-mode":
+    particles:
+      size: {}
+      spawnCount: {}
+      totalCount: {}
+    screenShake: {}
+  "atom-beautify":
+    apex: {}
+    arduino: {}
+    c: {}
+    cfml: {}
+    coffeescript: {}
+    cpp: {}
+    cs: {}
+    css: {}
+    d: {}
+    ejs: {}
+    erb: {}
+    fortran: {}
+    general:
+      muteUnsupportedLanguageErrors: true
+    gherkin: {}
+    handlebars: {}
+    html:
+      beautify_on_save: true
+    jade: {}
+    java: {}
+    js:
+      end_with_newline: true
+      indent_size: 2
+      max_preserve_newlines: 2
+      space_after_anon_function: true
+    json:
+      beautify_on_save: true
+    jsx: {}
+    latex: {}
+    less: {}
+    marko: {}
+    mustache: {}
+    objectivec: {}
+    pawn: {}
+    perl: {}
+    php: {}
+    python: {}
+    riot: {}
+    ruby: {}
+    rust: {}
+    sass: {}
+    scss: {}
+    spacebars: {}
+    sql: {}
+    svg: {}
+    swig: {}
+    tss: {}
+    twig: {}
+    typescript: {}
+    vala: {}
+    visualforce: {}
+    xml: {}
+    xtemplate: {}
+  "autoclose-html": {}
+  core:
+    themes: [
+      "one-dark-ui"
+      "icehunter-syntax"
+    ]
+  docblockr: {}
+  editor:
+    fontSize: 12
+    invisibles: {}
+    lineHeight: 1.25
+    scrollPastEnd: true
+    showIndentGuide: true
+  "git-history": {}
+  "git-log": {}
+  "git-plus":
+    pullBeforePush: "pull"
+  linter: {}
+  "linter-eslint": {}
+  "one-dark-ui": {}
+  pigments: {}
+  react: {}
+  script:
+    stopOnRerun: true
+  tabs: {}
+  welcome:
+    showOnStartup: false

@@ -8,12 +8,84 @@ if [[ $? != 0 ]]; then
 fi
 
 # get some required packages
-brew install bash bash-completion zsh zsh-completions ctags wget git git-extras vim nvm
+brew install zsh zsh-completions ctags wget git git-extras vim nvm
 brew tap caskroom/cask
-brew cask install java dockertoolbox
+brew cask install java dockertoolbox atom
+
+# remove outdated packages from cask
+brew cask cleanup
+
+# remove outdated versions from the cellar.
+brew cleanup -s
+
+# setup some dotfiles
+if [[ ! -f ~/.curlrc ]]; then
+  ln -sfv ${PWD}/.curlrc ~/.curlrc
+fi
+if [[ ! -f ~/.gitconfig ]]; then
+  ln -sfv ${PWD}/.gitconfig ~/.gitconfig
+fi
+if [[ ! -f ~/.gitignore_global ]]; then
+  ln -sfv ${PWD}/.gitignore_global ~/.gitignore_global
+fi
+if [[ ! -f ~/.tern-config ]]; then
+  ln -sfv ${PWD}/.tern-config ~/.tern-config
+fi
+
+# setup basic folders
+mkdir -p ~/.atom
+mkdir -p ~/.nvm
+mkdir -p ~/.vim
+
+# configure vim colors
+if [[ ! -f ~/.atom/config.cson ]]; then
+  ln -sfv ${PWD}/.atom/config.cson ~/.atom/config.cson
+fi
+if [[ ! -f ~/.atom/init.coffee ]]; then
+  ln -sfv ${PWD}/.atom/init.coffee ~/.atom/init.coffee
+fi
+if [[ ! -f ~/.atom/keymap.cson ]]; then
+  ln -sfv ${PWD}/.atom/keymap.cson ~/.atom/keymap.cson
+fi
+if [[ ! -f ~/.atom/snippets.cson ]]; then
+  ln -sfv ${PWD}/.atom/snippets.cson ~/.atom/snippets.cson
+fi
+if [[ ! -f ~/.atom/styles.less ]]; then
+  ln -sfv ${PWD}/.atom/styles.less ~/.atom/styles.less
+fi
+
+# symlink atom items
+
+atomPackages=(
+  "activate-power-mode"
+  "advanced-new-file"
+  "atom-beautify"
+  "atom-material-ui"
+  "atom-ternjs"
+  "autoclose-html"
+  "autocomplete-paths"
+  "docblockr"
+  "file-icons"
+  "git-history"
+  "git-log"
+  "git-plus"
+  "icehunter-syntax"
+  "language-dustjs"
+  "linter"
+  "linter-eslint"
+  "node-debugger"
+  "open-in-browser"
+  "pigments"
+  "react"
+  "script"
+  "turbo-javascript"
+)
+
+for package in "${atomPackages[@]}"; do
+  apm install $package
+done
 
 # ensure nvm
-mkdir -p ~/.nvm
 NVM_DIR=~/.nvm
 . /usr/local/opt/nvm/nvm.sh
 
@@ -26,38 +98,23 @@ if [[ ! -d ~/.oh-my-zsh ]]; then
   sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 fi
 
-if [[ ! -f ~/.curlrc ]]; then
-  ln -sfv ${PWD}/.curlrc ~/.curlrc
-fi
-
-if [[ ! -f ~/.gitconfig ]]; then
-  ln -sfv ${PWD}/.gitconfig ~/.gitconfig
-fi
-
-if [[ ! -f ~/.gitignore_global ]]; then
-  ln -sfv ${PWD}/.gitignore_global ~/.gitignore_global
-fi
-
-if [[ ! -f ~/.tern-config ]]; then
-  ln -sfv ${PWD}/.tern-config ~/.tern-config
-fi
-
-if [[ ! -f ~/.vimrc ]]; then
-  ln -sfv ${PWD}/.vimrc ~/.vimrc
-fi
-
-if [[ ! -f ~/.vimrc.local ]]; then
-  ln -sfv ${PWD}/.vimrc.local ~/.vimrc.local
-fi
-
+# configure zsh
 if [[ ! -f ~/.zshrc ]]; then
   ln -sfv ${PWD}/.zshrc ~/.zshrc
 fi
-
 if [[ ! -f ~/.oh-my-zsh/themes/icehunter.zsh-theme ]]; then
   ln -sfv ${PWD}/.oh-my-zsh/themes/icehunter.zsh-theme ~/.oh-my-zsh/themes/icehunter.zsh-theme
 fi
 
+# configure vim
+if [[ ! -f ~/.vimrc ]]; then
+  ln -sfv ${PWD}/.vimrc ~/.vimrc
+fi
+if [[ ! -f ~/.vimrc.local ]]; then
+  ln -sfv ${PWD}/.vimrc.local ~/.vimrc.local
+fi
+
+# configure vim colors
 if [[ ! -f ~/.vim/colors/icehunter.vim ]]; then
   ln -sfv ${PWD}/.vim/colors/icehunter.vim ~/.vim/colors/icehunter.vim
 fi
