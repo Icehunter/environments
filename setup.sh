@@ -60,7 +60,6 @@ atomPackages=(
   "activate-power-mode"
   "advanced-new-file"
   "atom-beautify"
-  "atom-material-ui"
   "atom-ternjs"
   "autoclose-html"
   "autocomplete-paths"
@@ -82,7 +81,9 @@ atomPackages=(
 )
 
 for package in "${atomPackages[@]}"; do
-  apm install $package
+  if [[ ! -d ~/.atom/packages/$package ]]; then
+    apm install $package
+  fi
 done
 
 # ensure nvm
