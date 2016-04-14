@@ -75,7 +75,7 @@
   "git-history": {}
   "git-log": {}
   "git-plus":
-    pullBeforePush: "pull"
+    pullBeforePush: "pull --rebase"
   linter: {}
   "linter-eslint": {}
   "one-dark-ui": {}
