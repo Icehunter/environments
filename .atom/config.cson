@@ -42,6 +42,7 @@
     pawn: {}
     perl: {}
     php: {}
+    puppet: {}
     python: {}
     riot: {}
     ruby: {}
