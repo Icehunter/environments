@@ -12,11 +12,11 @@ brew install zsh zsh-completions ctags wget git git-extras vim nvm
 brew tap caskroom/cask
 brew cask install java dockertoolbox atom
 
-# remove outdated packages from cask
-brew cask cleanup
-
 # remove outdated versions from the cellar.
-brew cleanup -s
+brew cleanup
+
+# remove outdated packages from homebrew && cask
+brew cask cleanup
 
 # setup some dotfiles
 if [[ ! -f ~/.curlrc ]]; then

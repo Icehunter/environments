@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/Icehunter/.oh-my-zsh
+export ZSH=~/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -40,7 +40,7 @@ ZSH_THEME="icehunter"
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
 # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# HIST_STAMPS="mm/dd/yyyy"
+HIST_STAMPS="yyyy-mm-dd"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -49,7 +49,7 @@ ZSH_THEME="icehunter"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(common-aliases git git-extras)
+plugins=(common-aliases docker git git-extras npm)
 
 # User configuration
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -88,25 +88,51 @@ alias si="sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.metad
 # few little useful aliases
 alias mkdir="mkdir -pv"
 alias wget="wget -c"
-alias apmu="yes | apm update"
-alias bu="brew update && brew upgrade"
+
+# update development env
+devup () {
+  brew update
+  brew upgrade
+
+  apps=(/opt/homebrew-cask/Caskroom/*)
+  for app in "${apps[@]}"; do
+    brew cask install $(awk '{gsub("/opt/homebrew-cask/Caskroom/","");print}' <<< "$app")
+  done
+
+  brew cleanup
+  brew cask cleanup
+  yes | apm update
+}
+
+# docker-compose up shorthand
+dcup () {
+  docker-compose up $@
+}
 
 alias vi="vim"
 
+# grep options
 export GREP_OPTIONS="--color=auto"
 export GREP_COLOR="0;32"
 
+# terminal options
 export TERM=xterm-256color
 export CLICOLOR=1
 export LSCOLORS=Exfxcxdxbxegedabagacad
 
+# path variables
 export ANDROID_HOME=~/Downloads/android-sdk-macosx
 export KITEMATIC_HOME=/Applications/Docker/Kitematic\ \(Beta\).app/Contents/Resources/resources
+
+# finalize path
 export PATH=$KITEMATIC_HOME:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:/usr/local/bin:/usr/local/sbin:$PATH
+
+# docker exports
 export DOCKER_TLS_VERIFY="1"
 export DOCKER_HOST="tcp://192.168.99.100:2376"
 export DOCKER_CERT_PATH=~/.docker/machine/machines/default
 export DOCKER_MACHINE_NAME="default"
-export NVM_DIR=~/.nvm
 
+# nvm setup
+export NVM_DIR=~/.nvm
 . /usr/local/opt/nvm/nvm.sh
