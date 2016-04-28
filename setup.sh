@@ -55,6 +55,7 @@ brewInstalls=(
 )
 
 caskInstalls=(
+  1password
   atom
   dockertoolbox
   firefox
