@@ -8,7 +8,7 @@ export ZSH=~/.oh-my-zsh
 ZSH_THEME="icehunter"
 
 # Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+CASE_SENSITIVE="true"
 
 # Uncomment the following line to use hyphen-insensitive completion. Case
 # sensitive completion must be off. _ and - will be interchangeable.
@@ -136,3 +136,6 @@ export DOCKER_MACHINE_NAME="default"
 # nvm setup
 export NVM_DIR=~/.nvm
 . /usr/local/opt/nvm/nvm.sh
+
+# uncommited stuffies
+. ~/.privates

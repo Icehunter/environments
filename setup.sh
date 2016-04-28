@@ -1,5 +1,29 @@
 #!/usr/bin/env bash
 
+# delete dotfile's if they are already present but not symlinks
+dotFiles=(
+  ~/.curlrc
+  ~/.gitconfig
+  ~/.gitignore_global
+  ~/.tern-config
+  ~/.atom/config.cson
+  ~/.atom/init.coffee
+  ~/.atom/keymap.cson
+  ~/.atom/snippets.cson
+  ~/.atom/styles.less
+  ~/.zshrc
+  ~/.oh-my-zsh/themes/icehunter.zsh-theme
+  ~/.vimrc
+  ~/.vimrc.local
+  ~/.vim/colors/icehunter.vim
+)
+
+for file in "${dotFiles[@]}"; do
+  if [[ -f $file && ! -L $file ]]; then
+    rm -f $file
+  fi
+done
+
 # It's assumed xcode and command line utils are installed
 # install homebrew
 which -s brew
@@ -32,12 +56,13 @@ if [[ ! -f ~/.tern-config ]]; then
   ln -sfv ${PWD}/.tern-config ~/.tern-config
 fi
 
-# setup basic folders
+# setup basic folders and files
 mkdir -p ~/.atom
 mkdir -p ~/.nvm
 mkdir -p ~/.vim
+touch ~/.privates
 
-# configure vim colors
+# configure atom
 if [[ ! -f ~/.atom/config.cson ]]; then
   ln -sfv ${PWD}/.atom/config.cson ~/.atom/config.cson
 fi
@@ -55,7 +80,6 @@ if [[ ! -f ~/.atom/styles.less ]]; then
 fi
 
 # symlink atom items
-
 atomPackages=(
   "activate-power-mode"
   "advanced-new-file"
