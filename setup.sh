@@ -24,17 +24,50 @@ for file in "${dotFiles[@]}"; do
   fi
 done
 
-# It's assumed xcode and command line utils are installed
+# install Xcode Command Line Tools (if not already)
+
+if [[ ! -d /Library/Developer/CommandLineTools ]]; then
+  touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress;
+  PROD=$(softwareupdate -l |
+    grep "\*.*Command Line" |
+    head -n 1 | awk -F"*" '{print $2}' |
+    sed -e 's/^ *//' |
+    tr -d '\n')
+  softwareupdate -i "$PROD" -v;
+fi
+
 # install homebrew
 which -s brew
 if [[ $? != 0 ]]; then
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
-# get some required packages
-brew install zsh zsh-completions ctags wget git git-extras vim nvm
 brew tap caskroom/cask
-brew cask install java dockertoolbox atom
+
+brewInstalls=(
+  ctags
+  git
+  git-extras
+  nvm
+  vim
+  wget
+  zsh
+  zsh-completions
+)
+
+caskInstalls=(
+  atom
+  dockertoolbox
+  java
+)
+
+for program in "${brewInstalls[@]}"; do
+  brew install $program
+done
+
+for program in "${caskInstalls[@]}"; do
+  brew cask install $program
+done
 
 # remove outdated versions from the cellar.
 brew cleanup
@@ -81,27 +114,27 @@ fi
 
 # symlink atom items
 atomPackages=(
-  "activate-power-mode"
-  "advanced-new-file"
-  "atom-beautify"
-  "atom-ternjs"
-  "autoclose-html"
-  "autocomplete-paths"
-  "docblockr"
-  "file-icons"
-  "git-history"
-  "git-log"
-  "git-plus"
-  "icehunter-syntax"
-  "language-dustjs"
-  "linter"
-  "linter-eslint"
-  "node-debugger"
-  "open-in-browser"
-  "pigments"
-  "react"
-  "script"
-  "turbo-javascript"
+  activate-power-mode
+  advanced-new-file
+  atom-beautify
+  atom-ternjs
+  autoclose-html
+  autocomplete-paths
+  docblockr
+  file-icons
+  git-history
+  git-log
+  git-plus
+  icehunter-syntax
+  language-dustjs
+  linter
+  linter-eslint
+  node-debugger
+  open-in-browser
+  pigments
+  react
+  script
+  turbo-javascript
 )
 
 for package in "${atomPackages[@]}"; do
