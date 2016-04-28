@@ -25,7 +25,6 @@ for file in "${dotFiles[@]}"; do
 done
 
 # install Xcode Command Line Tools (if not already)
-
 if [[ ! -d /Library/Developer/CommandLineTools ]]; then
   touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress;
   PROD=$(softwareupdate -l |
@@ -58,13 +57,18 @@ brewInstalls=(
 caskInstalls=(
   atom
   dockertoolbox
+  firefox
+  google-chrome
+  google-drive
   java
 )
 
+# install some basic bundles form homebrew
 for program in "${brewInstalls[@]}"; do
   brew install $program
 done
 
+# install some basic devtools
 for program in "${caskInstalls[@]}"; do
   brew cask install $program
 done
