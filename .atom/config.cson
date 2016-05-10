@@ -22,8 +22,7 @@
       muteUnsupportedLanguageErrors: true
     gherkin: {}
     handlebars: {}
-    html:
-      beautify_on_save: true
+    html: {}
     jade: {}
     java: {}
     js:
@@ -62,6 +61,7 @@
     xtemplate: {}
   "autoclose-html": {}
   core:
+    automaticallyUpdate: false
     themes: [
       "one-dark-ui"
       "icehunter-syntax"
@@ -77,7 +77,8 @@
   "git-log": {}
   "git-plus":
     pullBeforePush: "pull --rebase"
-  linter: {}
+  linter:
+    showErrorPanel: false
   "linter-eslint": {}
   "one-dark-ui": {}
   pigments: {}

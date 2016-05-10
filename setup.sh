@@ -1,5 +1,18 @@
 #!/usr/bin/env bash
 
+# create basic folders
+mkdir -p ~/.atom
+mkdir -p ~/.nvm
+mkdir -p ~/.vim
+
+# create base files
+touch ~/.privates
+
+cat ~/.privates | grep -q 'NPM_TOKEN'
+if [[ $? != 0 ]]; then
+  echo "export NPM_TOKEN=00000000-0000-0000-0000-000000000000" >> ~/.privates
+fi
+
 # delete dotfile's if they are already present but not symlinks
 dotFiles=(
   ~/.curlrc
@@ -11,6 +24,7 @@ dotFiles=(
   ~/.atom/keymap.cson
   ~/.atom/snippets.cson
   ~/.atom/styles.less
+  ~/.npmrc
   ~/.zshrc
   ~/.oh-my-zsh/themes/icehunter.zsh-theme
   ~/.vimrc
@@ -21,6 +35,10 @@ dotFiles=(
 for file in "${dotFiles[@]}"; do
   if [[ -f $file && ! -L $file ]]; then
     rm -f $file
+  fi
+  if [[ ! -f $file ]]; then
+    customFile=${PWD}/$(awk "{gsub(\"${HOME}/\",\"\");print}" <<< "$file")
+    ln -sfv $customFile $file
   fi
 done
 
@@ -44,10 +62,18 @@ fi
 brew tap caskroom/cask
 
 brewInstalls=(
+  bfg
   ctags
   git
   git-extras
+  mongodb
+  mysql
+  nginx
   nvm
+  python
+  python3
+  rabbitmq
+  redis
   vim
   wget
   zsh
@@ -55,12 +81,8 @@ brewInstalls=(
 )
 
 caskInstalls=(
-  1password
   atom
   dockertoolbox
-  firefox
-  google-chrome
-  google-drive
   java
 )
 
@@ -80,46 +102,13 @@ brew cleanup
 # remove outdated packages from homebrew && cask
 brew cask cleanup
 
-# setup some dotfiles
-if [[ ! -f ~/.curlrc ]]; then
-  ln -sfv ${PWD}/.curlrc ~/.curlrc
-fi
-if [[ ! -f ~/.gitconfig ]]; then
-  ln -sfv ${PWD}/.gitconfig ~/.gitconfig
-fi
-if [[ ! -f ~/.gitignore_global ]]; then
-  ln -sfv ${PWD}/.gitignore_global ~/.gitignore_global
-fi
-if [[ ! -f ~/.tern-config ]]; then
-  ln -sfv ${PWD}/.tern-config ~/.tern-config
-fi
-
-# setup basic folders and files
-mkdir -p ~/.atom
-mkdir -p ~/.nvm
-mkdir -p ~/.vim
-touch ~/.privates
-
-# configure atom
-if [[ ! -f ~/.atom/config.cson ]]; then
-  ln -sfv ${PWD}/.atom/config.cson ~/.atom/config.cson
-fi
-if [[ ! -f ~/.atom/init.coffee ]]; then
-  ln -sfv ${PWD}/.atom/init.coffee ~/.atom/init.coffee
-fi
-if [[ ! -f ~/.atom/keymap.cson ]]; then
-  ln -sfv ${PWD}/.atom/keymap.cson ~/.atom/keymap.cson
-fi
-if [[ ! -f ~/.atom/snippets.cson ]]; then
-  ln -sfv ${PWD}/.atom/snippets.cson ~/.atom/snippets.cson
-fi
-if [[ ! -f ~/.atom/styles.less ]]; then
-  ln -sfv ${PWD}/.atom/styles.less ~/.atom/styles.less
+# install oh-my-zsh
+if [[ ! -d ~/.oh-my-zsh ]]; then
+  sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 fi
 
 # symlink atom items
 atomPackages=(
-  activate-power-mode
   advanced-new-file
   atom-beautify
   atom-ternjs
@@ -155,29 +144,3 @@ NVM_DIR=~/.nvm
 # set node to latest stable
 nvm install stable
 nvm alias default node
-
-# get oh-my-zsh
-if [[ ! -d ~/.oh-my-zsh ]]; then
-  sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-fi
-
-# configure zsh
-if [[ ! -f ~/.zshrc ]]; then
-  ln -sfv ${PWD}/.zshrc ~/.zshrc
-fi
-if [[ ! -f ~/.oh-my-zsh/themes/icehunter.zsh-theme ]]; then
-  ln -sfv ${PWD}/.oh-my-zsh/themes/icehunter.zsh-theme ~/.oh-my-zsh/themes/icehunter.zsh-theme
-fi
-
-# configure vim
-if [[ ! -f ~/.vimrc ]]; then
-  ln -sfv ${PWD}/.vimrc ~/.vimrc
-fi
-if [[ ! -f ~/.vimrc.local ]]; then
-  ln -sfv ${PWD}/.vimrc.local ~/.vimrc.local
-fi
-
-# configure vim colors
-if [[ ! -f ~/.vim/colors/icehunter.vim ]]; then
-  ln -sfv ${PWD}/.vim/colors/icehunter.vim ~/.vim/colors/icehunter.vim
-fi
