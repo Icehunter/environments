@@ -3,7 +3,7 @@
 # create basic folders
 mkdir -p ~/.atom
 mkdir -p ~/.nvm
-mkdir -p ~/.vim
+mkdir -p ~/.vim/colors
 
 # create base files
 touch ~/.privates

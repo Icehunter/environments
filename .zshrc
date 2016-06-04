@@ -120,12 +120,16 @@ export TERM=xterm-256color
 export CLICOLOR=1
 export LSCOLORS=Exfxcxdxbxegedabagacad
 
-# path variables
-export ANDROID_HOME=~/Downloads/android-sdk-macosx
-export KITEMATIC_HOME=/Applications/Docker/Kitematic\ \(Beta\).app/Contents/Resources/resources
+userPaths=(
+  /usr/local/opt/go/libexec/bin
+  /Applications/Docker/Kitematic\ \(Beta\).app/Contents/Resources/resources
+  ~/Downloads/android-sdk-macosx
+  /usr/local/sbin
+)
 
-# finalize path
-export PATH=$KITEMATIC_HOME:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:/usr/local/bin:/usr/local/sbin:$PATH
+for userPath in "${userPaths[@]}"; do
+  export PATH=$userPath:$PATH
+done
 
 # docker exports
 export DOCKER_TLS_VERIFY="1"
