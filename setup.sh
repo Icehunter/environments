@@ -102,11 +102,6 @@ brew cleanup
 # remove outdated packages from homebrew && cask
 brew cask cleanup
 
-# install oh-my-zsh
-if [[ ! -d ~/.oh-my-zsh ]]; then
-  sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-fi
-
 # symlink atom items
 atomPackages=(
   advanced-new-file
@@ -144,3 +139,8 @@ NVM_DIR=~/.nvm
 # set node to latest stable
 nvm install stable
 nvm alias default node
+
+# install oh-my-zsh
+if [[ ! -d ~/.oh-my-zsh ]]; then
+  sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+fi

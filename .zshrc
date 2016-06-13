@@ -89,24 +89,73 @@ alias si="sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.metad
 alias mkdir="mkdir -pv"
 alias wget="wget -c"
 
-# update development env
-devup () {
-  brew update
-  brew upgrade
+# docker
 
-  apps=(/opt/homebrew-cask/Caskroom/*)
-  for app in "${apps[@]}"; do
-    brew cask install $(awk '{gsub("/opt/homebrew-cask/Caskroom/","");print}' <<< "$app")
-  done
+# kill
+dkill () {
+  local CMDRESULTS=$(docker ps -q)
+  if [[ ! -z ${CMDRESULTS} ]]; then
+    docker kill $CMDRESULTS
+  fi
+}
 
-  brew cleanup
-  brew cask cleanup
-  yes | apm update
+# delete all stopped containers
+drm () {
+  local CMDRESULTS=$(docker ps -a -q)
+  if [[ ! -z ${CMDRESULTS} ]]; then
+    docker rm $CMDRESULTS
+  fi
+}
+
+# delete images, default "none", but can do everything
+drmi () {
+  if [[ $1 == '--all' ]]; then
+    local CMDRESULTS=$(docker images -q)
+    if [[ ! -z ${CMDRESULTS} ]]; then
+      docker rmi -f $CMDRESULTS
+    fi
+  else
+    local CMDRESULTS=$(docker images | grep "^<none>" | awk "{print $3}")
+    if [[ ! -z ${CMDRESULTS} ]]; then
+      docker rmi $CMDRESULTS
+    fi
+  fi
+}
+
+# kill and delete containers/images
+dclean () {
+  dk $@
+  ddc $@
+  ddi $@
+}
+
+# docker-machine
+dm () {
+  docker-machine $@
+}
+
+dmr () {
+  dm restart default
 }
 
 # docker-compose up shorthand
 dcup () {
   docker-compose up $@
+}
+
+# update development env
+devup () {
+  brew update
+  brew upgrade
+
+  apps=(/usr/local/Caskroom/*)
+  for app in "${apps[@]}"; do
+    brew cask install $(awk '{gsub("/usr/local/Caskroom/","");print}' <<< "$app")
+  done
+
+  brew cleanup
+  brew cask cleanup
+  yes | apm update
 }
 
 alias vi="vim"
