@@ -8,7 +8,7 @@ export ZSH=~/.oh-my-zsh
 ZSH_THEME="icehunter"
 
 # Uncomment the following line to use case-sensitive completion.
-CASE_SENSITIVE="true"
+# CASE_SENSITIVE="true"
 
 # Uncomment the following line to use hyphen-insensitive completion. Case
 # sensitive completion must be off. _ and - will be interchangeable.
@@ -80,10 +80,9 @@ alias atom="atom ."
 alias finder="open ."
 alias tower="gittower ."
 alias pweb="python -m SimpleHTTPServer"
-alias npmc="npm --userconfig=~/.npmrccorp"
 
 # force spotlight re-index
-alias si="sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist && sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist"
+alias sri="sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist && sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist"
 
 # few little useful aliases
 alias mkdir="mkdir -pv"
@@ -93,40 +92,36 @@ alias wget="wget -c"
 
 # kill
 dkill () {
-  local CMDRESULTS=$(docker ps -q)
-  if [[ ! -z ${CMDRESULTS} ]]; then
-    docker kill $CMDRESULTS
+  if [[ ! -z $(docker ps -q) ]]; then
+    docker kill $(docker ps -q)
   fi
 }
 
 # delete all stopped containers
 drm () {
-  local CMDRESULTS=$(docker ps -a -q)
-  if [[ ! -z ${CMDRESULTS} ]]; then
-    docker rm $CMDRESULTS
+  if [[ ! -z $(docker ps -a -q) ]]; then
+    docker rm $(docker ps -a -q)
   fi
 }
 
 # delete images, default "none", but can do everything
 drmi () {
   if [[ $1 == '--all' ]]; then
-    local CMDRESULTS=$(docker images -q)
-    if [[ ! -z ${CMDRESULTS} ]]; then
-      docker rmi -f $CMDRESULTS
+    if [[ ! -z $(docker images -q) ]]; then
+      docker rmi -f $(docker images -q)
     fi
   else
-    local CMDRESULTS=$(docker images | grep "^<none>" | awk "{print $3}")
-    if [[ ! -z ${CMDRESULTS} ]]; then
-      docker rmi $CMDRESULTS
+    if [[ ! -z $(docker images | grep "^<none>" | awk "{print $3}") ]]; then
+      docker rmi $(docker images | grep "^<none>" | awk "{print $3}")
     fi
   fi
 }
 
 # kill and delete containers/images
 dclean () {
-  dk $@
-  ddc $@
-  ddi $@
+  dkill $@
+  drm $@
+  drmi $@
 }
 
 # docker-machine
@@ -169,16 +164,19 @@ export TERM=xterm-256color
 export CLICOLOR=1
 export LSCOLORS=Exfxcxdxbxegedabagacad
 
-userPaths=(
-  /usr/local/opt/go/libexec/bin
-  /Applications/Docker/Kitematic\ \(Beta\).app/Contents/Resources/resources
-  ~/Downloads/android-sdk-macosx
-  /usr/local/sbin
-)
+typeset -A customPaths
 
-for userPath in "${userPaths[@]}"; do
-  export PATH=$userPath:$PATH
+customPaths[GOPATH]=~/Development/go
+customPaths[KITEMATIC]='/Applications/Docker/Kitematic\ \(Beta\).app/Contents/Resources/resources'
+customPaths[ANDROID_SDK]=~/Downloads/android-sdk-macosx
+customPaths[LOCAL_SBIN]='/usr/local/sbin'
+
+for key in "${(@k)customPaths}"; do
+  export $key=$customPaths[$key]
+  export PATH=$customPaths[$key]:$PATH
 done
+
+export PATH=$GOPATH/bin:$PATH
 
 # docker exports
 export DOCKER_TLS_VERIFY="1"

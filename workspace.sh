@@ -8,10 +8,10 @@
 WORKSPACE=${HOME}/.workspace.dmg.sparseimage
 
 # location where workspace will be mounted
-MOUNTPOINT=${HOME}/GitHub
+MOUNTPOINT=${HOME}/Development
 
 # name of workspace as visible in Finder
-VOLUME_NAME=GitHub
+VOLUME_NAME=Development
 
 # volume size
 VOLUME_SIZE=60g
