@@ -9,9 +9,12 @@ mkdir -p ~/.vim/colors
 touch ~/.privates
 
 cat ~/.privates | grep -q 'NPM_TOKEN'
+
 if [[ $? != 0 ]]; then
   echo "export NPM_TOKEN=00000000-0000-0000-0000-000000000000" >> ~/.privates
 fi
+
+. ~/.privates
 
 # delete dotfile's if they are already present but not symlinks
 dotFiles=(
@@ -61,6 +64,12 @@ fi
 
 brew tap caskroom/cask
 
+caskInstalls=(
+  atom
+  docker-toolbox
+  java
+)
+
 brewInstalls=(
   bfg
   ctags
@@ -80,27 +89,21 @@ brewInstalls=(
   zsh-completions
 )
 
-caskInstalls=(
-  atom
-  dockertoolbox
-  java
-)
+# install some basic devtools
+for program in "${caskInstalls[@]}"; do
+  brew cask install $program
+done
 
 # install some basic bundles form homebrew
 for program in "${brewInstalls[@]}"; do
   brew install $program
 done
 
-# install some basic devtools
-for program in "${caskInstalls[@]}"; do
-  brew cask install $program
-done
+# remove outdated packages from homebrew && cask
+brew cask cleanup
 
 # remove outdated versions from the cellar.
 brew cleanup
-
-# remove outdated packages from homebrew && cask
-brew cask cleanup
 
 # symlink atom items
 atomPackages=(

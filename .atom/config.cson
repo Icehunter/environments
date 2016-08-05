@@ -19,7 +19,6 @@
     erb: {}
     fortran: {}
     general:
-      _analyticsUserId: "8dc7695f-aff6-4af9-ab7e-b42e349f03e9"
       muteUnsupportedLanguageErrors: true
     gherkin: {}
     handlebars: {}
@@ -74,8 +73,6 @@
     lineHeight: 1.25
     scrollPastEnd: true
     showIndentGuide: true
-  "exception-reporting":
-    userId: "98719888-e460-8b36-d408-71bc811d87c0"
   "git-history": {}
   "git-log": {}
   "git-plus":
@@ -89,5 +86,6 @@
   script:
     stopOnRerun: true
   tabs: {}
+  "tree-view": {}
   welcome:
     showOnStartup: false
