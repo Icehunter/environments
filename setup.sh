@@ -66,7 +66,6 @@ brew tap caskroom/cask
 
 caskInstalls=(
   atom
-  docker-toolbox
   java
 )
 

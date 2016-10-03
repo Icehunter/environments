@@ -2,7 +2,7 @@ set mouse=a
 set clipboard+=autoselect
 set guioptions+=a
 
-set cursorline
-" set number!
+ set cursorline
+"" set number!
 
 colorscheme icehunter

@@ -49,7 +49,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(common-aliases docker git git-extras npm)
+plugins=(common-aliases git git-extras)
 
 # User configuration
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -73,10 +73,14 @@ fi
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
 # zsh completions
-fpath=(/usr/local/share/zsh-completions $fpath)
+# fpath=(/usr/local/share/zsh-completions $fpath)
+
+# fuck
+# eval $(thefuck --alias)
 
 # helper application calls
 alias atom="atom ."
+alias code="code ."
 alias finder="open ."
 alias tower="gittower ."
 alias pweb="python -m SimpleHTTPServer"
@@ -88,8 +92,27 @@ alias sri="sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.meta
 alias mkdir="mkdir -pv"
 alias wget="wget -c"
 
-# docker
+# NVM Helpers
+checkNodeVersion () {
+  if [[ -f '.nvmrc' ]]; then
+    nvm use;
+  fi
+}
 
+checkNodeVersion
+
+# nvm use on directory change
+cd () {
+  builtin cd $@ && checkNodeVersion
+}
+pushd () {
+  builtin pushd $@ && checkNodeVersion
+}
+popd () {
+  builtin popd $@ && checkNodeVersion
+}
+
+# docker
 # kill
 dkill () {
   if [[ ! -z $(docker ps -q) ]]; then
@@ -124,15 +147,6 @@ dclean () {
   drmi $@
 }
 
-# docker-machine
-dm () {
-  docker-machine $@
-}
-
-dmr () {
-  dm restart default
-}
-
 # docker-compose up shorthand
 dcup () {
   docker-compose up $@
@@ -153,8 +167,6 @@ devup () {
   yes | apm update
 }
 
-alias vi="vim"
-
 # grep options
 export GREP_OPTIONS="--color=auto"
 export GREP_COLOR="0;32"
@@ -167,7 +179,6 @@ export LSCOLORS=Exfxcxdxbxegedabagacad
 typeset -A customPaths
 
 customPaths[GOPATH]=~/Development/go
-customPaths[KITEMATIC]='/Applications/Docker/Kitematic\ \(Beta\).app/Contents/Resources/resources'
 customPaths[ANDROID_SDK]=~/Downloads/android-sdk-macosx
 customPaths[LOCAL_SBIN]='/usr/local/sbin'
 
@@ -178,15 +189,10 @@ done
 
 export PATH=$GOPATH/bin:$PATH
 
-# docker exports
-export DOCKER_TLS_VERIFY="1"
-export DOCKER_HOST="tcp://192.168.99.100:2376"
-export DOCKER_CERT_PATH=~/.docker/machine/machines/default
-export DOCKER_MACHINE_NAME="default"
-
 # uncommited stuffies
 . ~/.privates
 
 # nvm setup
 export NVM_DIR=~/.nvm
 . /usr/local/opt/nvm/nvm.sh
+

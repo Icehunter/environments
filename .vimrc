@@ -7,7 +7,7 @@ endif
 
 let vimplug_exists=expand('~/.vim/autoload/plug.vim')
 
-let g:vim_bootstrap_langs = "javascript,ruby,python,c,php,html,lua,go"
+let g:vim_bootstrap_langs = "javascript,ruby,python,php,html,lua,go"
 let g:vim_bootstrap_editor = "vim"				" nvim or vim
 
 if !filereadable(vimplug_exists)
@@ -71,8 +71,6 @@ Plug 'honza/vim-snippets'
 Plug 'tomasr/molokai'
 
 "" Custom bundles
-Plug 'vim-scripts/c.vim'
-
 "" Python Bundle
 Plug 'davidhalter/jedi-vim'
 
@@ -91,7 +89,7 @@ Plug 'tpope/vim-haml'
 Plug 'mattn/emmet-vim'
 
 "" Go Lang Bundle
-Plug 'fatih/vim-go'
+Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
 
 "" PHP Bundle
 Plug 'arnaud-lb/vim-php-namespace'
@@ -234,6 +232,7 @@ let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tagbar#enabled = 1
+let g:airline_skip_empty_sections = 1
 
 "*****************************************************************************
 "" Abbreviations
@@ -397,7 +396,10 @@ nmap <silent> <F4> :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
 
 " Disable visualbell
-set novisualbell t_vb=
+set noerrorbells visualbell t_vb=
+if has('autocmd')
+  autocmd GUIEnter * set visualbell t_vb=
+endif
 
 "" Copy/Paste/Cut
 if has('unnamedplus')
@@ -444,9 +446,6 @@ vnoremap K :m '<-2<CR>gv=gv
 nnoremap <Leader>o :.Gbrowse<CR>
 
 "" Custom configs
-
-
-
 
 " vim-python
 augroup vimrc-python
