@@ -75,9 +75,6 @@ fi
 # zsh completions
 # fpath=(/usr/local/share/zsh-completions $fpath)
 
-# fuck
-# eval $(thefuck --alias)
-
 # helper application calls
 alias atom="atom ."
 alias code="code ."
