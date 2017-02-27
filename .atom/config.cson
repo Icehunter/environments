@@ -26,6 +26,7 @@
     jade: {}
     java: {}
     js:
+      beautify_on_save: true
       end_with_newline: true
       indent_size: 2
       max_preserve_newlines: 2
@@ -61,7 +62,7 @@
     xtemplate: {}
   "autoclose-html": {}
   core:
-    automaticallyUpdate: false
+    telemetryConsent: "limited"
     themes: [
       "one-dark-ui"
       "icehunter-syntax"
@@ -76,7 +77,8 @@
   "git-history": {}
   "git-log": {}
   "git-plus":
-    pullBeforePush: "pull --rebase"
+    remoteInteractions:
+      pullRebase: true
   linter:
     showErrorPanel: false
   "linter-eslint": {}

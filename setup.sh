@@ -67,6 +67,7 @@ brew tap caskroom/cask
 caskInstalls=(
   atom
   java
+  visual-studio-code
 )
 
 brewInstalls=(
@@ -75,6 +76,7 @@ brewInstalls=(
   git
   git-extras
   mongodb
+  mono
   mysql
   nginx
   nvm
@@ -131,6 +133,27 @@ atomPackages=(
 for package in "${atomPackages[@]}"; do
   if [[ ! -d ~/.atom/packages/$package ]]; then
     apm install $package
+  fi
+done
+
+codePackages=(
+  HookyQR.beautify
+  PeterJausovec.vscode-docker
+  Zignd.html-css-class-completion
+  alefragnani.project-manager
+  christian-kohler.path-intellisense
+  dbaeumer.vscode-eslint
+  dbankier.vscode-instant-markdown
+  formulahendry.code-runner
+  ms-vscode.csharp
+  robertohuertasm.vscode-icons
+  siegebell.scope-info
+  xabikos.JavaScriptSnippets
+)
+
+for package in "${codePackages[@]}"; do
+  if [[ ! -d ~/.vscode/extensions/$package ]]; then
+    code --install-extension $package
   fi
 done
 

@@ -88,6 +88,7 @@ alias sri="sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.meta
 # few little useful aliases
 alias mkdir="mkdir -pv"
 alias wget="wget -c"
+alias vi="vim"
 
 # NVM Helpers
 checkNodeVersion () {
@@ -161,6 +162,7 @@ devup () {
 
   brew cleanup
   brew cask cleanup
+
   yes | apm update
 }
 
@@ -176,7 +178,6 @@ export LSCOLORS=Exfxcxdxbxegedabagacad
 typeset -A customPaths
 
 customPaths[GOPATH]=~/Development/go
-customPaths[ANDROID_SDK]=~/Downloads/android-sdk-macosx
 customPaths[LOCAL_SBIN]='/usr/local/sbin'
 
 for key in "${(@k)customPaths}"; do
@@ -186,10 +187,11 @@ done
 
 export PATH=$GOPATH/bin:$PATH
 
+export MONO_GAC_PREFIX="/usr/local"
+
 # uncommited stuffies
 . ~/.privates
 
-# nvm setup
-export NVM_DIR=~/.nvm
-. /usr/local/opt/nvm/nvm.sh
-
+# nvm
+export NVM_DIR="$HOME/.nvm"
+. "/usr/local/opt/nvm/nvm.sh"

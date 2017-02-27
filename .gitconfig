@@ -21,9 +21,10 @@
 	required = true
 	smudge = git hawser smudge %f
 [filter "lfs"]
-	clean = git-lfs clean %f
 	required = true
-	smudge = git-lfs smudge %f
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
 [filter "media"]
 	clean = git media clean %f
 	required = true
@@ -46,4 +47,5 @@
 	name = Ryan Wilson
 [alias]
 	f = "!f(){ git reset --soft HEAD~${1} && git commit --edit -m\"$(git log --format=%B --reverse HEAD..HEAD@{1})\"; };f"
-	s = "!f(){ git reset --soft HEAD^ && git add . && git stash; };f"
+    s = "!f(){ git reset --soft HEAD^ && git add . && git stash; };f"
+    l = "!f(){ git rm -r --cached . && git reset --hard; };f"

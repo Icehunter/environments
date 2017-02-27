@@ -1,0 +1,14 @@
+// Place your settings in this file to overwrite the default settings
+{
+    "editor.fontFamily": "Roboto, Menlo, Monaco, 'Courier New', monospace",
+    "editor.tabSize": 2,
+    "editor.formatOnType": true,
+    "editor.formatOnPaste": true,
+    "editor.tabCompletion": true,
+    "files.exclude": {
+        "**/.git": false
+    },
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "vsicons.projectDetection.disableDetect": true
+  }
