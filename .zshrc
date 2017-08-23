@@ -162,8 +162,6 @@ devup () {
 
   brew cleanup
   brew cask cleanup
-
-  yes | apm update
 }
 
 # grep options
