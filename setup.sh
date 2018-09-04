@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # create basic folders
+mkdir -p ~/.atom
 mkdir -p ~/.nvm
 mkdir -p ~/.vim/colors
 mkdir -p ~/.vscode/extensions
@@ -19,16 +20,21 @@ fi
 
 # delete dotfile's if they are already present but not symlinks
 dotFiles=(
+  ~/.atom/config.cson
+  ~/.atom/init.coffee
+  ~/.atom/keymap.cson
+  ~/.atom/snippets.cson
+  ~/.atom/styles.less
+  ~/.vim/colors/icehunter.vim
+  ~/.oh-my-zsh/themes/icehunter.zsh-theme
   ~/.curlrc
   ~/.gitconfig
   ~/.gitignore_global
-  ~/.tern-config
   ~/.npmrc
-  ~/.zshrc
-  ~/.oh-my-zsh/themes/icehunter.zsh-theme
+  ~/.tern-config
   ~/.vimrc
   ~/.vimrc.local
-  ~/.vim/colors/icehunter.vim
+  ~/.zshrc
 )
 
 for file in "${dotFiles[@]}"; do
@@ -61,6 +67,9 @@ fi
 brew tap caskroom/cask
 
 caskInstalls=(
+  atom
+  dotnet
+  dotnet-sdk
   java
   visual-studio-code
 )
@@ -101,25 +110,58 @@ brew cask cleanup
 # remove outdated versions from the cellar.
 brew cleanup
 
+# symlink atom items
+atomPackages=(
+  advanced-new-file
+  atom-beautify
+  autoclose-html
+  autocomplete-paths
+  docblockr
+  file-icons
+  git-history
+  git-log
+  git-plus
+  icehunter-syntax
+  linter
+  linter-eslint
+  node-debugger
+  open-in-browser
+  pigments
+  react
+  script
+  turbo-javascript
+)
+
+for package in "${atomPackages[@]}"; do
+  if [[ ! -d ~/.atom/packages/$package ]]; then
+    apm install $package
+  fi
+done
+
+
 # setup vscode settings
 ln -sfv ${PWD}/Code/settings.json ~/Library/Application\ Support/Code/User/settings.json
 ln -sfv ${PWD}/Code/vsicons.settings.json ~/Library/Application\ Support/Code/User/vsicons.settings.json
 
 # setup vscode packages
 codePackages=(
-  HookyQR.beautify
-  PeterJausovec.vscode-docker
-  Zignd.html-css-class-completion
   alefragnani.project-manager
   christian-kohler.path-intellisense
   dbaeumer.vscode-eslint
-  dbankier.vscode-instant-markdown
+  donjayamanne.githistory
+  esbenp.prettier-vscode
+  flowtype.flow-for-vscode
   formulahendry.code-runner
+  icehunter.theme-icehunter
+  icehunter.turbojavascript
   ms-vscode.csharp
+  msjsdiag.debugger-for-chrome
+  peterjausovec.vscode-docker
   robertohuertasm.vscode-icons
   siegebell.scope-info
+  waderyan.gitblame
   xabikos.JavaScriptSnippets
-  Icehunter.TurboJavaScript
+  zignd.html-css-class-completion
 )
 
 for package in "${codePackages[@]}"; do

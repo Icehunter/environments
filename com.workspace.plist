@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>RunAtLoad</key>
+        <true/>
+        <key>Label</key>
+        <string>com.workspace</string>
+        <key>ProgramArguments</key>
+        <array>
+            <string>hdiutil</string>
+            <string>attach</string>
+            <string>-notremovable</string>
+            <string>-nobrowse</string>
+            <string>-mountpoint</string>
+            <string>/Users/rwilson/GitHub</string>
+            <string>/Users/rwilson/.workspace.dmg.sparseimage</string>
+        </array>
+    </dict>
+</plist>

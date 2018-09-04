@@ -155,13 +155,44 @@ devup () {
   brew update
   brew upgrade
 
-  apps=(/usr/local/Caskroom/*)
-  for app in "${apps[@]}"; do
-    brew cask install $(awk '{gsub("/usr/local/Caskroom/","");print}' <<< "$app")
-  done
+  updatableCasks=$(brew cask outdated | awk '{print $1}')
+
+  if [[ ! -z "$updatableCasks" ]]; then
+    for app in "${updatableCasks[@]}"; do
+      brew cask reinstall $app
+    done
+  fi
 
   brew cleanup
   brew cask cleanup
+}
+
+hide () {
+  # kill jamf
+  sudo launchctl unload /Library/LaunchDaemons/com.jamfsoftware.jamf.daemon.plist
+  sudo launchctl unload /Library/LaunchDaemons/com.jamfsoftware.task.1.plist
+  sudo launchctl unload /Library/LaunchDaemons/com.tanium.taniumclient.plist
+
+  sudo mv /usr/local/jamf/bin/jamf /usr/local/jamf/bin/jamf.backup
+  sudo mv /usr/local/jamf/bin/jamfAgent /usr/local/jamf/bin/jamfAgent.backup
+
+  sudo kill -9 $(ps A | grep -i 'jamf' | awk '{print $1}')
+
+  # sudo profiles -R -p 00000000-0000-0000-A000-4A414D460003
+  # ps A | grep -i 'jamf'
+}
+
+show () {
+  sudo mv /usr/local/jamf/bin/jamf.backup /usr/local/jamf/bin/jamf
+  sudo mv /usr/local/jamf/bin/jamfAgent.backup /usr/local/jamf/bin/jamfAgent
+
+  sudo launchctl load /Library/LaunchDaemons/com.jamfsoftware.jamf.daemon.plist
+  sudo launchctl load /Library/LaunchDaemons/com.jamfsoftware.task.1.plist
+  sudo launchctl load /Library/LaunchDaemons/com.tanium.taniumclient.plist
+
+  sudo jamf manage
+  sudo jamf recon
+  # ps A | grep -i 'jamf'
 }
 
 # grep options
@@ -175,7 +206,6 @@ export LSCOLORS=Exfxcxdxbxegedabagacad
 
 typeset -A customPaths
 
-customPaths[GOPATH]=~/Development/go
 customPaths[LOCAL_SBIN]='/usr/local/sbin'
 
 for key in "${(@k)customPaths}"; do
@@ -183,7 +213,9 @@ for key in "${(@k)customPaths}"; do
   export PATH=$customPaths[$key]:$PATH
 done
 
-export PATH=$GOPATH/bin:$PATH
+export PATH=$PATH
+
+eval $(thefuck --alias)
 
 export MONO_GAC_PREFIX="/usr/local"
 

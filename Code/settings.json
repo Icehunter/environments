@@ -1,31 +1,39 @@
 // Place your settings in this file to overwrite the default settings
 {
-    "editor.fontFamily": "Roboto, Menlo, Monaco, 'Courier New', monospace",
-    "editor.rulers": [80],
-    "editor.tabSize": 2,
-    "editor.formatOnType": true,
-    "editor.tabCompletion": true,
-
-    "files.exclude": {
-        "**/.git": false
-    },
-    "files.trimTrailingWhitespace": true,
-    "files.insertFinalNewline": true,
-
-    "extensions.autoUpdate": true,
-
-    "telemetry.enableCrashReporter": false,
-    "telemetry.enableTelemetry": false,
-
-    "vsicons.projectDetection.disableDetect": true,
-
-    "eslint.validate": [
-        "javascript",
-        "javascriptreact",
-        "json"
-    ],
-
-    "path-intellisense.autoSlashAfterDirectory": true,
-    "workbench.colorTheme": "Icehunter",
-    "workbench.iconTheme": "vscode-icons"
+  "csharp.format.enable": false,
+  "csharpfixformat.style.spaces.beforeParenthesis": false,
+  "debug.node.autoAttach": "on",
+  "editor.fontFamily": "Roboto, Menlo, Monaco, \"Courier New\", monospace",
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "editor.rulers": [120],
+  "editor.tabCompletion": true,
+  "editor.tabSize": 2,
+  "eslint.validate": ["javascript", "javascriptreact", "json"],
+  "eslint.packageManager": "yarn",
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "extensions.autoUpdate": true,
+  "files.exclude": {
+    "**/.git": false
+  },
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "javascript.updateImportsOnFileMove.enabled": "never",
+  "javascript.validate.enable": false,
+  "npm.enableScriptExplorer": true,
+  "path-intellisense.autoSlashAfterDirectory": true,
+  "telemetry.enableCrashReporter": false,
+  "telemetry.enableTelemetry": false,
+  "typescript.validate.enable": false,
+  "vsicons.dontShowNewVersionMessage": true,
+  "vsicons.projectDetection.disableDetect": true,
+  "workbench.colorTheme": "Icehunter",
+  "workbench.iconTheme": "vscode-icons",
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  },
+  "window.zoomLevel": 0,
+  "breadcrumbs.enabled": true
 }
