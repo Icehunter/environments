@@ -152,19 +152,20 @@ dcup () {
 
 # update development env
 devup () {
-  brew update
-  brew upgrade
+  # brew update
+  # brew upgrade
 
   updatableCasks=$(brew cask outdated | awk '{print $1}')
-
+  echo $updatableCasks
   if [[ ! -z "$updatableCasks" ]]; then
     for app in "${updatableCasks[@]}"; do
-      brew cask reinstall $app
+      # brew cask reinstall $app
+      echo "here"
+      echo $app
     done
   fi
 
-  brew cleanup
-  brew cask cleanup
+  # brew cleanup
 }
 
 hide () {

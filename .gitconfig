@@ -46,7 +46,8 @@
 	email = syndicated.life@gmail.com
 	name = Ryan Wilson
 [alias]
-	f = "!f(){ git reset --soft HEAD~${1} && git commit --edit -m\"$(git log --format=%B --reverse HEAD..HEAD@{1})\"; };f"
-    s = "!f(){ git reset --soft HEAD^ && git add . && git stash; };f"
-    l = "!f(){ git rm -r --cached . && git reset --hard; };f"
     c = "!f(){ git clean -x -d -f; };f"
+    f = "!f(){ git reset --soft HEAD~${1} && git commit --edit -m\"$(git log --format=%B --reverse HEAD..HEAD@{1})\"; };f"
+    l = "!f(){ git rm -r --cached . && git reset --hard; };f"
+		p = "!f(){ git branch --merged master | grep -v '^[ *]*master$' | xargs git branch -D; };f"
+    s = "!f(){ git reset --soft HEAD^ && git add . && git stash; };f"
