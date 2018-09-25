@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 # create basic folders
-mkdir -p ~/.atom
 mkdir -p ~/.nvm
 mkdir -p ~/.vim/colors
 mkdir -p ~/.vscode/extensions
@@ -20,11 +19,6 @@ fi
 
 # delete dotfile's if they are already present but not symlinks
 dotFiles=(
-  ~/.atom/config.cson
-  ~/.atom/init.coffee
-  ~/.atom/keymap.cson
-  ~/.atom/snippets.cson
-  ~/.atom/styles.less
   ~/.vim/colors/icehunter.vim
   ~/.oh-my-zsh/themes/icehunter.zsh-theme
   ~/.curlrc
@@ -67,7 +61,6 @@ fi
 brew tap caskroom/cask
 
 caskInstalls=(
-  atom
   dotnet
   dotnet-sdk
   java
@@ -79,14 +72,11 @@ brewInstalls=(
   ctags
   git
   git-extras
-  mongodb
   mono
-  mysql
   nginx
   nvm
   python
   python3
-  rabbitmq
   redis
   vim
   wget
@@ -110,35 +100,6 @@ brew cask cleanup
 # remove outdated versions from the cellar.
 brew cleanup
 
-# symlink atom items
-atomPackages=(
-  advanced-new-file
-  atom-beautify
-  autoclose-html
-  autocomplete-paths
-  docblockr
-  file-icons
-  git-history
-  git-log
-  git-plus
-  icehunter-syntax
-  linter
-  linter-eslint
-  node-debugger
-  open-in-browser
-  pigments
-  react
-  script
-  turbo-javascript
-)
-
-for package in "${atomPackages[@]}"; do
-  if [[ ! -d ~/.atom/packages/$package ]]; then
-    apm install $package
-  fi
-done
-
-
 # setup vscode settings
 ln -sfv ${PWD}/Code/settings.json ~/Library/Application\ Support/Code/User/settings.json
 ln -sfv ${PWD}/Code/vsicons.settings.json ~/Library/Application\ Support/Code/User/vsicons.settings.json
@@ -154,13 +115,14 @@ codePackages=(
   formulahendry.code-runner
   icehunter.theme-icehunter
   icehunter.turbojavascript
+  leopotam.csharpfixformat
   ms-vscode.csharp
   msjsdiag.debugger-for-chrome
   peterjausovec.vscode-docker
   robertohuertasm.vscode-icons
   siegebell.scope-info
   waderyan.gitblame
-  xabikos.JavaScriptSnippets
+  xabikos.javascriptsnippets
   zignd.html-css-class-completion
 )
 

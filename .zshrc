@@ -90,14 +90,10 @@ alias mkdir="mkdir -pv"
 alias wget="wget -c"
 alias vi="vim"
 
-# NVM Helpers
-checkNodeVersion () {
-  if [[ -f '.nvmrc' ]]; then
-    nvm use;
-  fi
+fn () {
+  killall flow
+  killall node
 }
-
-checkNodeVersion
 
 # nvm use on directory change
 cd () {
@@ -168,34 +164,6 @@ devup () {
   # brew cleanup
 }
 
-hide () {
-  # kill jamf
-  sudo launchctl unload /Library/LaunchDaemons/com.jamfsoftware.jamf.daemon.plist
-  sudo launchctl unload /Library/LaunchDaemons/com.jamfsoftware.task.1.plist
-  sudo launchctl unload /Library/LaunchDaemons/com.tanium.taniumclient.plist
-
-  sudo mv /usr/local/jamf/bin/jamf /usr/local/jamf/bin/jamf.backup
-  sudo mv /usr/local/jamf/bin/jamfAgent /usr/local/jamf/bin/jamfAgent.backup
-
-  sudo kill -9 $(ps A | grep -i 'jamf' | awk '{print $1}')
-
-  # sudo profiles -R -p 00000000-0000-0000-A000-4A414D460003
-  # ps A | grep -i 'jamf'
-}
-
-show () {
-  sudo mv /usr/local/jamf/bin/jamf.backup /usr/local/jamf/bin/jamf
-  sudo mv /usr/local/jamf/bin/jamfAgent.backup /usr/local/jamf/bin/jamfAgent
-
-  sudo launchctl load /Library/LaunchDaemons/com.jamfsoftware.jamf.daemon.plist
-  sudo launchctl load /Library/LaunchDaemons/com.jamfsoftware.task.1.plist
-  sudo launchctl load /Library/LaunchDaemons/com.tanium.taniumclient.plist
-
-  sudo jamf manage
-  sudo jamf recon
-  # ps A | grep -i 'jamf'
-}
-
 # grep options
 export GREP_OPTIONS="--color=auto"
 export GREP_COLOR="0;32"
@@ -216,7 +184,24 @@ done
 
 export PATH=$PATH
 
-eval $(thefuck --alias)
+# Defer initialization of Fuck until Fuckcommand is run. Ensure this block is only run once
+# if .zshrc gets sourced multiple times by checking whether initializeFuck is a function.
+if [ ! "$(type -f initializeFuck)" = function ]; then
+  fuckCommands=(
+    fuck
+  )
+  initializeFuck () {
+    for cmd in "${fuckCommands[@]}"; do
+      unalias $cmd;
+    done
+    eval $(thefuck --alias)
+    unset fuckCommands
+    unset -f initializeFuck
+  }
+  for cmd in "${fuckCommands[@]}"; do
+    alias $cmd='initializeFuck && '$cmd;
+  done
+fi
 
 export MONO_GAC_PREFIX="/usr/local"
 
@@ -225,4 +210,39 @@ export MONO_GAC_PREFIX="/usr/local"
 
 # nvm
 export NVM_DIR="$HOME/.nvm"
-. "/usr/local/opt/nvm/nvm.sh"
+
+# Defer initialization of nvm until nvm, node or a node-dependent command is
+# run. Ensure this block is only run once if .zshrc gets sourced multiple times
+# by checking whether initializeNVM is a function.
+if [ ! "$(type -f initializeNVM)" = function ]; then
+  export NVM_DIR="$HOME/.nvm"
+  nodeCommands=(
+    babel
+    gulp
+    node
+    npm
+    nvm
+    yarn
+    webpack
+  )
+  initializeNVM () {
+    for cmd in "${nodeCommands[@]}"; do
+      unalias $cmd;
+    done
+    . "/usr/local/opt/nvm/nvm.sh"
+    unset nodeCommands
+    unset -f initializeNVM
+  }
+  for cmd in "${nodeCommands[@]}"; do
+    alias $cmd='initializeNVM && '$cmd;
+  done
+fi
+
+# NVM Helpers
+checkNodeVersion () {
+  if [[ -f '.nvmrc' ]]; then
+    nvm use
+  fi
+}
+
+checkNodeVersion
