@@ -29,6 +29,7 @@ dotFiles=(
   ~/.vimrc
   ~/.vimrc.local
   ~/.zshrc
+  ~/.yarnrc
 )
 
 for file in "${dotFiles[@]}"; do
@@ -108,6 +109,7 @@ ln -sfv ${PWD}/Code/vsicons.settings.json ~/Library/Application\ Support/Code/Us
 codePackages=(
   alefragnani.project-manager
   christian-kohler.path-intellisense
+  cschlosser.doxdocgen
   dbaeumer.vscode-eslint
   donjayamanne.githistory
   esbenp.prettier-vscode
@@ -117,11 +119,14 @@ codePackages=(
   icehunter.turbojavascript
   leopotam.csharpfixformat
   ms-vscode.csharp
+  ms-vsliveshare.vsliveshare
   msjsdiag.debugger-for-chrome
+  nemesarial.dust
   peterjausovec.vscode-docker
   robertohuertasm.vscode-icons
   siegebell.scope-info
   waderyan.gitblame
+  wix.vscode-import-cost
   xabikos.javascriptsnippets
   zignd.html-css-class-completion
 )

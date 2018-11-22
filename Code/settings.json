@@ -34,5 +34,8 @@
   },
   "window.zoomLevel": 0,
   "breadcrumbs.enabled": true,
-  "csharp.format.enable": false
+  "csharp.format.enable": false,
+  "git.autofetch": true,
+  "git.path": "/usr/local/bin/git",
+  "editor.formatOnSave": true
 }
