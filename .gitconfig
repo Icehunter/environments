@@ -47,6 +47,7 @@
 	name = Ryan Wilson
 [alias]
     c = "!f(){ git clean -x -d -f; };f"
+    z = "!f(){ npx git-cz; };f"
     f = "!f(){ git reset --soft HEAD~${1} && git commit --edit -m\"$(git log --format=%B --reverse HEAD..HEAD@{1})\"; };f"
     l = "!f(){ git rm -r --cached . && git reset --hard; };f"
     p = "!f(){ git branch --merged master | grep -v '^[ *]*master$' | xargs git branch -D; };f"

@@ -73,7 +73,7 @@ fi
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
 # zsh completions
-# fpath=(/usr/local/share/zsh-completions $fpath)
+fpath=(/usr/local/share/zsh-completions $fpath)
 
 # helper application calls
 alias atom="atom ."
@@ -123,15 +123,7 @@ drm () {
 
 # delete images, default "none", but can do everything
 drmi () {
-  if [[ $1 == '--all' ]]; then
-    if [[ ! -z $(docker images -q) ]]; then
-      docker rmi -f $(docker images -q)
-    fi
-  else
-    if [[ ! -z $(docker images | grep "^<none>" | awk "{print $3}") ]]; then
-      docker rmi $(docker images | grep "^<none>" | awk "{print $3}")
-    fi
-  fi
+  docker system prune -a -f
 }
 
 # kill and delete containers/images
@@ -148,20 +140,14 @@ dcup () {
 
 # update development env
 devup () {
-  # brew update
-  # brew upgrade
+  brew update
+  brew upgrade
+  brew cask upgrade
+  brew cleanup
+}
 
-  updatableCasks=$(brew cask outdated | awk '{print $1}')
-  echo $updatableCasks
-  if [[ ! -z "$updatableCasks" ]]; then
-    for app in "${updatableCasks[@]}"; do
-      # brew cask reinstall $app
-      echo "here"
-      echo $app
-    done
-  fi
-
-  # brew cleanup
+nvmi () {
+  nvm install $@ --reinstall-packages-from=$(node --version)
 }
 
 # grep options
@@ -184,24 +170,26 @@ done
 
 export PATH=$PATH
 
-# Defer initialization of Fuck until Fuckcommand is run. Ensure this block is only run once
-# if .zshrc gets sourced multiple times by checking whether initializeFuck is a function.
-if [ ! "$(type -f initializeFuck)" = function ]; then
-  fuckCommands=(
+# Defer initialization of the Fuck until the Fuck command is run. Ensure this block is only run once
+# if .zshrc gets sourced multiple times by checking whether initializeTheFuck is a function.
+if [ ! "$(type -f initializeTheFuck)" = function ]; then
+  theFuckCommands=(
     fuck
   )
-  initializeFuck () {
-    for cmd in "${fuckCommands[@]}"; do
+  initializeTheFuck () {
+    for cmd in "${theFuckCommands[@]}"; do
       unalias $cmd;
     done
     eval $(thefuck --alias)
-    unset fuckCommands
-    unset -f initializeFuck
+    unset theFuckCommands
+    unset -f initializeTheFuck
   }
-  for cmd in "${fuckCommands[@]}"; do
-    alias $cmd='initializeFuck && '$cmd;
+  for cmd in "${theFuckCommands[@]}"; do
+    alias $cmd='initializeTheFuck && '$cmd;
   done
 fi
+
+eval $(thefuck --alias)
 
 export MONO_GAC_PREFIX="/usr/local"
 
@@ -210,33 +198,35 @@ export MONO_GAC_PREFIX="/usr/local"
 
 # nvm
 export NVM_DIR="$HOME/.nvm"
+. "/usr/local/opt/nvm/nvm.sh"
 
-# Defer initialization of nvm until nvm, node or a node-dependent command is
-# run. Ensure this block is only run once if .zshrc gets sourced multiple times
-# by checking whether initializeNVM is a function.
-if [ ! "$(type -f initializeNVM)" = function ]; then
-  export NVM_DIR="$HOME/.nvm"
-  nodeCommands=(
-    babel
-    gulp
-    node
-    npm
-    nvm
-    yarn
-    webpack
-  )
-  initializeNVM () {
-    for cmd in "${nodeCommands[@]}"; do
-      unalias $cmd;
-    done
-    . "/usr/local/opt/nvm/nvm.sh"
-    unset nodeCommands
-    unset -f initializeNVM
-  }
-  for cmd in "${nodeCommands[@]}"; do
-    alias $cmd='initializeNVM && '$cmd;
-  done
-fi
+# # Defer initialization of nvm until nvm, node or a node-dependent command is
+# # run. Ensure this block is only run once if .zshrc gets sourced multiple times
+# # by checking whether initializeNVM is a function.
+# if [ ! "$(type -f initializeNVM)" = function ]; then
+#   nodeCommands=(
+#     babel
+#     flow
+#     gulp
+#     node
+#     npm
+#     npx
+#     nvm
+#     yarn
+#     webpack
+#   )
+#   initializeNVM () {
+#     for cmd in "${nodeCommands[@]}"; do
+#       unalias $cmd;
+#     done
+#     . "/usr/local/opt/nvm/nvm.sh"
+#     unset nodeCommands
+#     unset -f initializeNVM
+#   }
+#   for cmd in "${nodeCommands[@]}"; do
+#     alias $cmd='initializeNVM && '$cmd;
+#   done
+# fi
 
 # NVM Helpers
 checkNodeVersion () {
@@ -246,3 +236,5 @@ checkNodeVersion () {
 }
 
 checkNodeVersion
+
+. /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh

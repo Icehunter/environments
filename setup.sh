@@ -62,10 +62,13 @@ fi
 brew tap caskroom/cask
 
 caskInstalls=(
-  dotnet
+  aws-vault
+  font-fira-code
+  mysqlworkbench
+  visual-studio-code
   dotnet-sdk
   java
-  visual-studio-code
+  ngrok
 )
 
 brewInstalls=(
@@ -74,14 +77,18 @@ brewInstalls=(
   git
   git-extras
   mono
+  mysql
   nginx
   nvm
   python
   python3
   redis
+  thefuck
   vim
+  watchman
   wget
   zsh
+  zsh-autosuggestions
   zsh-completions
 )
 
@@ -108,27 +115,28 @@ ln -sfv ${PWD}/Code/vsicons.settings.json ~/Library/Application\ Support/Code/Us
 # setup vscode packages
 codePackages=(
   alefragnani.project-manager
+  christian-kohler.npm-intellisense
   christian-kohler.path-intellisense
+  CoenraadS.bracket-pair-colorizer
   cschlosser.doxdocgen
   dbaeumer.vscode-eslint
-  donjayamanne.githistory
+  eamodio.gitlens
+  eg2.vscode-npm-script
   esbenp.prettier-vscode
   flowtype.flow-for-vscode
   formulahendry.code-runner
-  icehunter.theme-icehunter
-  icehunter.turbojavascript
-  leopotam.csharpfixformat
+  Icehunter.theme-icehunter
+  Icehunter.TurboJavaScript
+  Leopotam.csharpfixformat
   ms-vscode.csharp
   ms-vsliveshare.vsliveshare
+  ms-vsliveshare.vsliveshare-audio
   msjsdiag.debugger-for-chrome
-  nemesarial.dust
-  peterjausovec.vscode-docker
-  robertohuertasm.vscode-icons
-  siegebell.scope-info
-  waderyan.gitblame
-  wix.vscode-import-cost
-  xabikos.javascriptsnippets
-  zignd.html-css-class-completion
+  PeterJausovec.vscode-docker
+  PKief.material-icon-theme
+  planbcoding.vscode-react-refactor
+  VisualStudioExptTeam.vscodeintellicode
+  Zignd.html-css-class-completion
 )
 
 for package in "${codePackages[@]}"; do
