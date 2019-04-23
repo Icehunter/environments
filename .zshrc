@@ -150,6 +150,14 @@ nvmi () {
   nvm install $@ --reinstall-packages-from=$(node --version)
 }
 
+nup () {
+  npx npm-check -u
+}
+
+yup () {
+  npx yarn-check -u
+}
+
 # grep options
 export GREP_OPTIONS="--color=auto"
 export GREP_COLOR="0;32"

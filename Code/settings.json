@@ -1,52 +1,68 @@
 // Place your settings in this file to overwrite the default settings
 {
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "breadcrumbs.enabled": true,
+  "csharp.format.enable": false,
   "csharpfixformat.style.spaces.beforeParenthesis": false,
+  "debug.inlineValues": true,
   "debug.node.autoAttach": "on",
-  "editor.fontFamily": "Fira Code, Roboto, Menlo, Monaco, \"Courier New\", monospace",
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  },
+  "editor.fontFamily": "\"Fira Code\", Roboto, Menlo, Monaco, \"Courier New\", monospace",
   "editor.fontLigatures": true,
   "editor.formatOnSave": true,
   "editor.formatOnType": true,
+  "editor.minimap.enabled": false,
   "editor.rulers": [160],
+  "editor.suggestSelection": "first",
   "editor.tabCompletion": "on",
   "editor.tabSize": 2,
-  "eslint.validate": ["javascript", "javascriptreact", "json"],
-  "eslint.packageManager": "yarn",
-  "explorer.confirmDelete": false,
-  "explorer.confirmDragAndDrop": false,
-  "extensions.autoUpdate": true,
-  "files.exclude": {
-    "**/.git": false
-  },
   "emmet.includeLanguages": {
     "javascript": "javascriptreact",
     "jsx-sublime-babel-tags": "javascriptreact"
   },
-  "emmet.triggerExpansionOnTab": true,
   "emmet.showExpandedAbbreviation": "never",
+  "emmet.triggerExpansionOnTab": true,
+  "eslint.alwaysShowStatus": true,
+  "eslint.autoFixOnSave": true,
+  "eslint.packageManager": "yarn",
+  "eslint.validate": ["javascript", "javascriptreact", "json"],
+  "explorer.confirmDelete": false,
+  "extensions.autoUpdate": true,
+  "files.autoSave": "off",
+  "files.exclude": {
+    "**/.git": false
+  },
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
+  "flow.enabled": false,
+  "git.autofetch": true,
+  "git.path": "/usr/local/bin/git",
+  "javascript.implicitProjectConfig.checkJs": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
   "javascript.validate.enable": false,
+  "material-icon-theme.folders.theme": "specific",
   "npm.enableScriptExplorer": true,
+  "prettier.arrowParens": "always",
+  "prettier.eslintIntegration": true,
+  "prettier.jsxBracketSameLine": true,
+  "prettier.jsxSingleQuote": true,
+  "prettier.printWidth": 160,
+  "prettier.singleQuote": true,
   "path-intellisense.autoSlashAfterDirectory": false,
   "telemetry.enableCrashReporter": false,
   "telemetry.enableTelemetry": false,
-  "workbench.colorTheme": "Icehunter",
-  "editor.codeActionsOnSave": {
-    "source.organizeImports": true
-  },
+  "terminal.integrated.enableBell": true,
+  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
   "window.zoomLevel": 0,
-  "breadcrumbs.enabled": true,
-  "csharp.format.enable": false,
-  "git.autofetch": true,
-  "git.path": "/usr/local/bin/git",
-  "files.autoSave": "off",
-  "javascript.updateImportsOnFileMove.enabled": "always",
-  "editor.minimap.enabled": false,
+  "workbench.colorTheme": "Icehunter",
   "workbench.iconTheme": "material-icon-theme",
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "material-icon-theme.folders.theme": "specific",
-  "editor.suggestSelection": "first",
-  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue"
+  "workbench.sideBar.location": "right",
+  "workbench.useExperimentalGridLayout": true,
+  "workbench.fontAliasing": "antialiased",
+  "workbench.view.alwaysShowHeaderActions": true,
+  "workbench.editor.highlightModifiedTabs": true
 }
