@@ -127,10 +127,12 @@ codePackages=(
   formulahendry.code-runner
   Icehunter.theme-icehunter
   Icehunter.TurboJavaScript
+  karigari.chat
   Leopotam.csharpfixformat
   ms-vscode.csharp
   ms-vsliveshare.vsliveshare
   ms-vsliveshare.vsliveshare-audio
+  ms-vsliveshare.vsliveshare-pack
   msjsdiag.debugger-for-chrome
   PeterJausovec.vscode-docker
   PKief.material-icon-theme

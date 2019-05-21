@@ -31,6 +31,7 @@
   "eslint.packageManager": "yarn",
   "eslint.validate": ["javascript", "javascriptreact", "json"],
   "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
   "extensions.autoUpdate": true,
   "files.autoSave": "off",
   "files.exclude": {
@@ -42,8 +43,8 @@
   "git.autofetch": true,
   "git.path": "/usr/local/bin/git",
   "javascript.implicitProjectConfig.checkJs": true,
-  "javascript.updateImportsOnFileMove.enabled": "always",
-  "javascript.validate.enable": false,
+  "javascript.updateImportsOnFileMove.enabled": "never",
+  "liveshare.featureSet": "insiders",
   "material-icon-theme.folders.theme": "specific",
   "npm.enableScriptExplorer": true,
   "prettier.arrowParens": "always",
@@ -56,13 +57,15 @@
   "telemetry.enableCrashReporter": false,
   "telemetry.enableTelemetry": false,
   "terminal.integrated.enableBell": true,
+  "typescript.updateImportsOnFileMove.enabled": "never",
   "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
   "window.zoomLevel": 0,
   "workbench.colorTheme": "Icehunter",
+  "workbench.editor.highlightModifiedTabs": true,
+  "workbench.fontAliasing": "auto",
   "workbench.iconTheme": "material-icon-theme",
   "workbench.sideBar.location": "right",
   "workbench.useExperimentalGridLayout": true,
-  "workbench.fontAliasing": "antialiased",
   "workbench.view.alwaysShowHeaderActions": true,
-  "workbench.editor.highlightModifiedTabs": true
+  "workbench.startupEditor": "newUntitledFile"
 }
