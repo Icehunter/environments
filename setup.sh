@@ -127,6 +127,7 @@ codePackages=(
   formulahendry.code-runner
   Icehunter.theme-icehunter
   Icehunter.TurboJavaScript
+  johnpapa.vscode-peacock
   karigari.chat
   Leopotam.csharpfixformat
   ms-vscode.csharp
