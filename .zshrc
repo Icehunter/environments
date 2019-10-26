@@ -49,7 +49,7 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(common-aliases git git-extras)
+plugins=(common-aliases git git-extras zsh-completions zsh-autosuggestions)
 
 # User configuration
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -72,23 +72,14 @@ fi
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
-# zsh completions
-fpath=(/usr/local/share/zsh-completions $fpath)
-
 # helper application calls
-alias atom="atom ."
 alias code="code ."
-alias finder="open ."
-alias tower="gittower ."
 alias pweb="python -m SimpleHTTPServer"
-
-# force spotlight re-index
-alias sri="sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist && sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist"
 
 # few little useful aliases
 alias mkdir="mkdir -pv"
 alias wget="wget -c"
-alias vi="vim"
+alias te="tar -xvf"
 
 fn () {
   killall flow
@@ -138,14 +129,6 @@ dcup () {
   docker-compose up $@
 }
 
-# update development env
-devup () {
-  brew update
-  brew upgrade
-  brew cask upgrade
-  brew cleanup
-}
-
 nvmi () {
   nvm install $@ --reinstall-packages-from=$(node --version)
 }
@@ -159,7 +142,7 @@ yup () {
 }
 
 # grep options
-export GREP_OPTIONS="--color=auto"
+# export GREP_OPTIONS="--color=auto"
 export GREP_COLOR="0;32"
 
 # terminal options
@@ -199,14 +182,12 @@ fi
 
 eval $(thefuck --alias)
 
-export MONO_GAC_PREFIX="/usr/local"
-
 # uncommited stuffies
 . ~/.privates
 
 # nvm
 export NVM_DIR="$HOME/.nvm"
-. "/usr/local/opt/nvm/nvm.sh"
+. "$NVM_DIR/nvm.sh"
 
 # # Defer initialization of nvm until nvm, node or a node-dependent command is
 # # run. Ensure this block is only run once if .zshrc gets sourced multiple times
@@ -244,5 +225,3 @@ checkNodeVersion () {
 }
 
 checkNodeVersion
-
-. /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh

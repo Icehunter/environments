@@ -42,75 +42,9 @@ for file in "${dotFiles[@]}"; do
   fi
 done
 
-# install Xcode Command Line Tools (if not already)
-if [[ ! -d /Library/Developer/CommandLineTools ]]; then
-  touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress;
-  PROD=$(softwareupdate -l |
-    grep "\*.*Command Line" |
-    head -n 1 | awk -F"*" '{print $2}' |
-    sed -e 's/^ *//' |
-    tr -d '\n')
-  softwareupdate -i "$PROD" -v;
-fi
-
-# install homebrew
-which -s brew
-if [[ $? != 0 ]]; then
-  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-fi
-
-brew tap caskroom/cask
-
-caskInstalls=(
-  aws-vault
-  font-fira-code
-  mysqlworkbench
-  visual-studio-code
-  dotnet-sdk
-  java
-  ngrok
-)
-
-brewInstalls=(
-  bfg
-  ctags
-  git
-  git-extras
-  mono
-  mysql
-  nginx
-  nvm
-  python
-  python3
-  redis
-  thefuck
-  vim
-  watchman
-  wget
-  zsh
-  zsh-autosuggestions
-  zsh-completions
-)
-
-# install some basic devtools
-for program in "${caskInstalls[@]}"; do
-  brew cask install $program
-done
-
-# install some basic bundles form homebrew
-for program in "${brewInstalls[@]}"; do
-  brew install $program
-done
-
-# remove outdated packages from homebrew && cask
-brew cask cleanup
-
-# remove outdated versions from the cellar.
-brew cleanup
-
 # setup vscode settings
-ln -sfv ${PWD}/Code/settings.json ~/Library/Application\ Support/Code/User/settings.json
-ln -sfv ${PWD}/Code/vsicons.settings.json ~/Library/Application\ Support/Code/User/vsicons.settings.json
+ln -sfv ${PWD}/Code/settings.json ~/.config/Code/User/settings.json
+ln -sfv ${PWD}/Code/vsicons.settings.json ~/.config/Code/User/vsicons.settings.json
 
 # setup vscode packages
 codePackages=(
@@ -150,13 +84,8 @@ done
 
 # ensure nvm
 NVM_DIR=~/.nvm
-. /usr/local/opt/nvm/nvm.sh
+. $NVM_DIR/nvm.sh
 
 # set node to latest stable
 nvm install stable
 nvm alias default node
-
-# install oh-my-zsh
-if [[ ! -d ~/.oh-my-zsh ]]; then
-  sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-fi

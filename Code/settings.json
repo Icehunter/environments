@@ -16,7 +16,9 @@
   "editor.formatOnSave": true,
   "editor.formatOnType": true,
   "editor.minimap.enabled": false,
-  "editor.rulers": [160],
+  "editor.rulers": [
+    160
+  ],
   "editor.suggestSelection": "first",
   "editor.tabCompletion": "on",
   "editor.tabSize": 2,
@@ -27,9 +29,18 @@
   "emmet.showExpandedAbbreviation": "never",
   "emmet.triggerExpansionOnTab": true,
   "eslint.alwaysShowStatus": true,
-  "eslint.autoFixOnSave": true,
+  "eslint.autoFixOnSave": false,
   "eslint.packageManager": "yarn",
-  "eslint.validate": ["javascript", "javascriptreact", "json"],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "json",
+    {
+      "language": "typescript",
+      "autoFix": true
+    },
+    "typescriptreact"
+  ],
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
   "extensions.autoUpdate": true,
@@ -48,7 +59,6 @@
   "material-icon-theme.folders.theme": "specific",
   "npm.enableScriptExplorer": true,
   "prettier.arrowParens": "always",
-  "prettier.eslintIntegration": true,
   "prettier.jsxBracketSameLine": true,
   "prettier.jsxSingleQuote": true,
   "prettier.printWidth": 160,
