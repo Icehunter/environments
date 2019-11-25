@@ -59,12 +59,11 @@ if [[ $? != 0 ]]; then
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
-brew tap caskroom/cask
+brew tap homebrew/fonts
+brew tap homebrew/cask
 
 caskInstalls=(
-  aws-vault
   font-fira-code
-  mysqlworkbench
   visual-studio-code
   dotnet-sdk
   java
@@ -77,8 +76,6 @@ brewInstalls=(
   git
   git-extras
   mono
-  mysql
-  nginx
   nvm
   python
   python3
@@ -123,22 +120,27 @@ codePackages=(
   eamodio.gitlens
   eg2.vscode-npm-script
   esbenp.prettier-vscode
-  flowtype.flow-for-vscode
-  formulahendry.code-runner
+  formulahendry.auto-rename-tag
   Icehunter.theme-icehunter
   Icehunter.TurboJavaScript
   johnpapa.vscode-peacock
   karigari.chat
   Leopotam.csharpfixformat
+  ms-azuretools.vscode-docker
   ms-vscode.csharp
   ms-vsliveshare.vsliveshare
   ms-vsliveshare.vsliveshare-audio
   ms-vsliveshare.vsliveshare-pack
   msjsdiag.debugger-for-chrome
-  PeterJausovec.vscode-docker
   PKief.material-icon-theme
   planbcoding.vscode-react-refactor
+  redhat.java
   VisualStudioExptTeam.vscodeintellicode
+  vscjava.vscode-java-debug
+  vscjava.vscode-java-dependency
+  vscjava.vscode-java-pack
+  vscjava.vscode-java-test
+  vscjava.vscode-maven
   Zignd.html-css-class-completion
 )
 
