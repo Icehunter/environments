@@ -5,7 +5,7 @@ export ZSH=~/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="icehunter"
+# ZSH_THEME="icehunter"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -49,7 +49,32 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(common-aliases git git-extras zsh-completions zsh-autosuggestions)
+
+if [[ ! -a ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions ]]; then
+  git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+fi
+
+if [[ ! -a ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-completions ]]; then
+  git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-completions
+fi
+
+if [[ ! -a ~/.zsh-async ]]; then
+    git clone https://github.com/mafredri/zsh-async.git ~/.zsh-async
+fi
+
+if [[ ! -a ~/.pure ]]; then
+    git clone https://github.com/sindresorhus/pure.git ~/.pure
+fi
+
+if [[ ! -a ~/.dircolors ]]; then
+    curl https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.ansi-dark --output ~/.dircolors
+fi
+
+# if [[ ! -a ~/.rbenv ]]; then
+#     git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+# fi
+
+plugins=(common-aliases git git-extras zsh-autosuggestions zsh-completions)
 
 # User configuration
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -73,76 +98,86 @@ fi
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
 # helper application calls
-alias code="code ."
-alias pweb="python -m SimpleHTTPServer"
+alias web="python -m SimpleHTTPServer"
 
 # few little useful aliases
-alias mkdir="mkdir -pv"
-alias wget="wget -c"
-alias te="tar -xvf"
+alias md="mkdir -pv"
+alias get="wget -c"
+alias vi="vim"
+alias e="tar -xvf"
+alias up="sudo apt update && sudo apt upgrade && omz update"
 
-fn () {
-  killall flow
+function code () {
+  if [[ $# -eq 0 ]]; then
+    /c/Users/Icehunter/AppData/Local/Programs/Microsoft\ VS\ Code/bin/code .
+  else
+    /c/Users/Icehunter/AppData/Local/Programs/Microsoft\ VS\ Code/bin/code $@
+  fi
+}
+
+function kn () {
   killall node
 }
 
-# nvm use on directory change
-cd () {
-  builtin cd $@ && checkNodeVersion
-}
-pushd () {
-  builtin pushd $@ && checkNodeVersion
-}
-popd () {
-  builtin popd $@ && checkNodeVersion
+function kp () {
+  sudo kill -9 $(sudo lsof -t -i:$@)
 }
 
 # docker
 # kill
-dkill () {
+function dkill () {
   if [[ ! -z $(docker ps -q) ]]; then
     docker kill $(docker ps -q)
   fi
 }
 
-# delete all stopped containers
-drm () {
-  if [[ ! -z $(docker ps -a -q) ]]; then
-    docker rm $(docker ps -a -q)
-  fi
-}
-
-# delete images, default "none", but can do everything
-drmi () {
-  docker system prune -a -f
-}
-
 # kill and delete containers/images
-dclean () {
-  dkill $@
-  drm $@
-  drmi $@
+function dclean () {
+  dkill
+  docker system prune -f
 }
 
 # docker-compose up shorthand
-dcup () {
+function dcup () {
   docker-compose up $@
 }
 
-nvmi () {
+function nvmi () {
   nvm install $@ --reinstall-packages-from=$(node --version)
 }
 
-nup () {
+function nup () {
   npx npm-check -u
 }
 
-yup () {
+function yup () {
   npx yarn-check -u
 }
 
+function clone () {
+  case $1 in
+    move|tile)
+      key="id_ed25519_$1"
+      echo "cloning using key: $key"
+      GIT_SSH_COMMAND="ssh -i ~/.ssh/$key" git clone $2
+      ;;
+    *)
+      git clone $1
+      ;;
+  esac
+}
+
+function gs () {
+  case $1 in
+    move|tile)
+      key="id_ed25519_$1"
+      echo "setting config to use key: $key"
+      git config --local core.sshCommand "ssh -i ~/.ssh/$key"
+      ;;
+  esac
+}
+
 # grep options
-# export GREP_OPTIONS="--color=auto"
 export GREP_COLOR="0;32"
 
 # terminal options
@@ -150,78 +185,77 @@ export TERM=xterm-256color
 export CLICOLOR=1
 export LSCOLORS=Exfxcxdxbxegedabagacad
 
-typeset -A customPaths
+paths=(
+  /usr/local/go/bin
+  ~/.nvm/versions/node/v12.0.0/bin
+  # ~/.rbenv/bin
+  /c/Users/Icehunter/AppData/Local/Programs/Microsoft\ VS\ Code/bin
+)
 
-customPaths[LOCAL_SBIN]='/usr/local/sbin'
-
-for key in "${(@k)customPaths}"; do
-  export $key=$customPaths[$key]
-  export PATH=$customPaths[$key]:$PATH
-done
-
-export PATH=$PATH
-
-# Defer initialization of the Fuck until the Fuck command is run. Ensure this block is only run once
-# if .zshrc gets sourced multiple times by checking whether initializeTheFuck is a function.
-if [ ! "$(type -f initializeTheFuck)" = function ]; then
-  theFuckCommands=(
-    fuck
-  )
-  initializeTheFuck () {
-    for cmd in "${theFuckCommands[@]}"; do
-      unalias $cmd;
-    done
-    eval $(thefuck --alias)
-    unset theFuckCommands
-    unset -f initializeTheFuck
-  }
-  for cmd in "${theFuckCommands[@]}"; do
-    alias $cmd='initializeTheFuck && '$cmd;
-  done
-fi
+export PATH="$(IFS=:; echo "${paths[*]}"):$PATH"
 
 eval $(thefuck --alias)
 
-# uncommited stuffies
-. ~/.privates
+. ~/.zsh-async/async.zsh
 
-# nvm
+fpath+=("$HOME/.pure")
+autoload -U promptinit; promptinit
+zstyle :prompt:pure:path color yellow
+prompt pure
+
 export NVM_DIR="$HOME/.nvm"
-. "$NVM_DIR/nvm.sh"
+. "$NVM_DIR/nvm.sh" --no-use
 
-# # Defer initialization of nvm until nvm, node or a node-dependent command is
-# # run. Ensure this block is only run once if .zshrc gets sourced multiple times
-# # by checking whether initializeNVM is a function.
-# if [ ! "$(type -f initializeNVM)" = function ]; then
-#   nodeCommands=(
-#     babel
-#     flow
-#     gulp
-#     node
-#     npm
-#     npx
-#     nvm
-#     yarn
-#     webpack
-#   )
-#   initializeNVM () {
-#     for cmd in "${nodeCommands[@]}"; do
-#       unalias $cmd;
-#     done
-#     . "/usr/local/opt/nvm/nvm.sh"
-#     unset nodeCommands
-#     unset -f initializeNVM
-#   }
-#   for cmd in "${nodeCommands[@]}"; do
-#     alias $cmd='initializeNVM && '$cmd;
-#   done
-# fi
+# place this after nvm initialization!
+autoload -U add-zsh-hook
 
-# NVM Helpers
-checkNodeVersion () {
-  if [[ -f '.nvmrc' ]]; then
-    nvm use
+load-nvmrc() {
+  command -v nvm >/dev/null 2>&1 || return;
+
+  local node_version="$(nvm version)"
+  local nvmrc_path=".nvmrc"
+
+  if [ -f "$nvmrc_path" ]; then
+    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+    if [ "$nvmrc_node_version" = "N/A" ]; then
+      nvm install
+    elif [ "$nvmrc_node_version" != "$node_version" ]; then
+      nvm use
+    fi
+  elif [ "$node_version" != "$(nvm version default)" ]; then
+    echo "reverting to nvm default version"
+    nvm use default
   fi
 }
+add-zsh-hook chpwd load-nvmrc
 
-checkNodeVersion
+eval `dircolors ~/.dircolors`
+# eval "$(rbenv init -)"
+
+# export DOCKER_HOST=tcp://localhost:2375
+
+# Note: Bash on Windows does not currently apply umask properly.
+if [[ "$(umask)" = "0000" ]]; then
+  umask 0022
+fi
+
+# Start docker daemon automatically when logging in if not running.
+RUNNING_DOCKER=`ps aux | grep dockerd | grep -v grep`
+if [ -z "$RUNNING_DOCKER" ]; then
+    sudo service docker start
+fi
+
+# Start mysql daemon automatically when logging in if not running.
+#RUNNING_MYSQL=`ps aux | grep mysqld | grep -v grep`
+#if [ -z "$RUNNING_MYSQL" ]; then
+#    sudo service mysql start
+#fi
+
+# Start redis daemon automatically when logging in if not running.
+#RUNNING_REDIS=`ps aux | grep redis | grep -v grep`
+#if [ -z "$RUNNING_REDIS" ]; then
+#    sudo service redis-server start
+#fi
+
+eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)

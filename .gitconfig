@@ -1,21 +1,18 @@
 [core]
-	editor = vim
+	editor = code --wait
 	excludesfile = ~/.gitignore_global
 	ignorecase = false
+	autocrlf = input
 [color]
 	branch = true
 	diff = true
 	interactive = true
 	status = true
 	ui = true
-[credential]
-	helper = osxkeychain
 [diff]
-	tool = Kaleidoscope
-[difftool]
-	prompt = false
-[difftool "Kaleidoscope"]
-	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+	tool = vscode
+[difftool "vscode"]
+	cmd = code --wait --diff $LOCAL $REMOTE
 [filter "hawser"]
 	clean = git hawser clean %f
 	required = true
@@ -32,11 +29,10 @@
 [gc]
 	auto = 1
 [merge]
-	tool = Kaleidoscope
-[mergetool]
+	tool = vscode
+[mergetool "vscode"]
 	prompt = false
-[mergetool "Kaleidoscope"]
-	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+	cmd = code --wait $MERGED
 	trustexitcode = true
 [pull]
 	rebase = true
@@ -53,3 +49,5 @@
 		r = "!f(){ mkdir -p lost; for blob in $(git fsck --lost-found | awk '$2 == \"blob\" { print $3 }'); do git cat-file -p $blob > lost/$blob.txt; done };f"
     s = "!f(){ git reset --soft HEAD^ && git add . && git stash; };f"
     z = "!f(){ npx git-cz; };f"
+[rerere]
+	enabled = true
