@@ -59,15 +59,15 @@ if [[ ! -a ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-completions ]]; then
 fi
 
 if [[ ! -a ~/.zsh-async ]]; then
-    git clone https://github.com/mafredri/zsh-async.git ~/.zsh-async
+  git clone https://github.com/mafredri/zsh-async.git ~/.zsh-async
 fi
 
 if [[ ! -a ~/.pure ]]; then
-    git clone https://github.com/sindresorhus/pure.git ~/.pure
+  git clone https://github.com/sindresorhus/pure.git ~/.pure
 fi
 
 if [[ ! -a ~/.dircolors ]]; then
-    curl https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.ansi-dark --output ~/.dircolors
+  curl https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.ansi-dark --output ~/.dircolors
 fi
 
 # if [[ ! -a ~/.rbenv ]]; then
@@ -109,9 +109,9 @@ alias up="sudo apt update && sudo apt upgrade && omz update"
 
 function code () {
   if [[ $# -eq 0 ]]; then
-    /c/Users/Icehunter/AppData/Local/Programs/Microsoft\ VS\ Code/bin/code .
+    /mnt/c/Users/Icehunter/AppData/Local/Programs/Microsoft\ VS\ Code/bin/code .
   else
-    /c/Users/Icehunter/AppData/Local/Programs/Microsoft\ VS\ Code/bin/code $@
+    /mnt/c/Users/Icehunter/AppData/Local/Programs/Microsoft\ VS\ Code/bin/code $@
   fi
 }
 
@@ -177,6 +177,13 @@ function gs () {
   esac
 }
 
+function fzh () {
+  cd ~
+  mv .zsh_history .zsh_history_bad
+  strings .zsh_history_bad > .zsh_history
+  fc -R .zsh_history
+}
+
 # grep options
 export GREP_COLOR="0;32"
 
@@ -187,9 +194,10 @@ export LSCOLORS=Exfxcxdxbxegedabagacad
 
 paths=(
   /usr/local/go/bin
-  ~/.nvm/versions/node/v12.0.0/bin
+  ~/.nvm/versions/node/v14.15.1/bin
   # ~/.rbenv/bin
-  /c/Users/Icehunter/AppData/Local/Programs/Microsoft\ VS\ Code/bin
+  /mnt/c/Users/Icehunter/AppData/Local/Programs/Microsoft\ VS\ Code/bin
+  /mnt/c/Windows/System32/WindowsPowerShell/v1.0/
 )
 
 export PATH="$(IFS=:; echo "${paths[*]}"):$PATH"
