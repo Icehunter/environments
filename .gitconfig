@@ -53,3 +53,5 @@
 	enabled = true
 [init]
 	defaultBranch = main
+[credential]
+	helper = cache

@@ -155,8 +155,9 @@ function yup () {
 }
 
 function clone () {
+  echo $1
   case $1 in
-    move|tile)
+    d)
       key="id_ed25519_$1"
       echo "cloning using key: $key"
       GIT_SSH_COMMAND="ssh -i ~/.ssh/$key" git clone $2
@@ -169,7 +170,7 @@ function clone () {
 
 function gs () {
   case $1 in
-    move|tile)
+    d)
       key="id_ed25519_$1"
       echo "setting config to use key: $key"
       git config --local core.sshCommand "ssh -i ~/.ssh/$key"
@@ -187,17 +188,20 @@ function fzh () {
 # grep options
 export GREP_COLOR="0;32"
 
+# export gpg
+export GPG_TTY=$(tty)
+
 # terminal options
 export TERM=xterm-256color
 export CLICOLOR=1
 export LSCOLORS=Exfxcxdxbxegedabagacad
 
 paths=(
-  /usr/local/go/bin
-  ~/.nvm/versions/node/v14.15.1/bin
+  ~/.nvm/versions/node/v16.0.0/bin
   # ~/.rbenv/bin
   /mnt/c/Users/Icehunter/AppData/Local/Programs/Microsoft\ VS\ Code/bin
   /mnt/c/Windows/System32/WindowsPowerShell/v1.0/
+  /mnt/c/Windows/System32/
 )
 
 export PATH="$(IFS=:; echo "${paths[*]}"):$PATH"
@@ -267,3 +271,20 @@ fi
 #fi
 
 eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+
+# set DISPLAY variable to the IP automatically assigned to WSL2
+# export HOST_IP=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}')
+# export DISPLAY=$HOST_IP:0
+# export LIBGL_ALWAYS_INDIRECT=1
+# sudo /etc/init.d/dbus start &> /dev/null
+
+/usr/bin/keychain --nogui $HOME/.ssh/id_ed25519
+/usr/bin/keychain --nogui $HOME/.ssh/id_ed25519_disco
+
+source $HOME/.keychain/$HOST-sh
+
+# start ssh-agent and include ssh-keys
+if [ -z "$SSH_AUTH_SOCK" ] ; then
+    eval `ssh-agent -s`
+    ssh-add
+fi
