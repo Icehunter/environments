@@ -1,5 +1,8 @@
 // Place your settings in this file to overwrite the default settings
 {
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "breadcrumbs.enabled": true,
   "csharp.format.enable": false,
   "csharpfixformat.style.spaces.beforeParenthesis": false,
@@ -8,7 +11,6 @@
   "editor.codeActionsOnSave": {
     "source.organizeImports": true
   },
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.fontFamily": "\"Fira Code\", Roboto, Menlo, Monaco, \"Courier New\", monospace",
   "editor.fontLigatures": true,
   "editor.formatOnSave": true,
@@ -27,12 +29,17 @@
   "emmet.showExpandedAbbreviation": "never",
   "emmet.triggerExpansionOnTab": true,
   "eslint.alwaysShowStatus": true,
-  "eslint.autoFixOnSave": true,
+  "eslint.autoFixOnSave": false,
   "eslint.packageManager": "yarn",
   "eslint.validate": [
     "javascript",
     "javascriptreact",
-    "json"
+    "json",
+    {
+      "language": "typescript",
+      "autoFix": true
+    },
+    "typescriptreact"
   ],
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
@@ -43,12 +50,19 @@
   },
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
+  "flow.enabled": false,
   "git.autofetch": true,
   "git.path": "/usr/local/bin/git",
   "javascript.implicitProjectConfig.checkJs": true,
   "javascript.updateImportsOnFileMove.enabled": "never",
+  "liveshare.featureSet": "insiders",
   "material-icon-theme.folders.theme": "specific",
   "npm.enableScriptExplorer": true,
+  "prettier.arrowParens": "always",
+  "prettier.jsxBracketSameLine": true,
+  "prettier.jsxSingleQuote": true,
+  "prettier.printWidth": 160,
+  "prettier.singleQuote": true,
   "path-intellisense.autoSlashAfterDirectory": false,
   "telemetry.enableCrashReporter": false,
   "telemetry.enableTelemetry": false,
@@ -61,7 +75,57 @@
   "workbench.fontAliasing": "auto",
   "workbench.iconTheme": "material-icon-theme",
   "workbench.sideBar.location": "right",
+  "workbench.useExperimentalGridLayout": true,
   "workbench.view.alwaysShowHeaderActions": true,
   "workbench.startupEditor": "newUntitledFile",
-  "java.configuration.checkProjectSettingsExclusions": false
+  "peacock.favoriteColors": [
+    {
+      "name": "Angular Red",
+      "value": "#b52e31"
+    },
+    {
+      "name": "Auth0 Orange",
+      "value": "#eb5424"
+    },
+    {
+      "name": "Azure Blue",
+      "value": "#007fff"
+    },
+    {
+      "name": "C# Purple",
+      "value": "#68217A"
+    },
+    {
+      "name": "Gatsby Purple",
+      "value": "#639"
+    },
+    {
+      "name": "Java Blue-Gray",
+      "value": "#557c9b"
+    },
+    {
+      "name": "JavaScript Yellow",
+      "value": "#f9e64f"
+    },
+    {
+      "name": "Mandalorian Blue",
+      "value": "#1857a4"
+    },
+    {
+      "name": "Node Green",
+      "value": "#215732"
+    },
+    {
+      "name": "React Blue",
+      "value": "#00b3e6"
+    },
+    {
+      "name": "Something Different",
+      "value": "#832561"
+    },
+    {
+      "name": "Vue Green",
+      "value": "#42b883"
+    }
+  ]
 }

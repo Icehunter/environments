@@ -5,7 +5,7 @@ export ZSH=~/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="icehunter"
+# ZSH_THEME="icehunter"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -49,7 +49,32 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(common-aliases git git-extras)
+
+if [[ ! -a ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions ]]; then
+  git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+fi
+
+if [[ ! -a ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-completions ]]; then
+  git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-completions
+fi
+
+if [[ ! -a ~/.zsh-async ]]; then
+  git clone https://github.com/mafredri/zsh-async.git ~/.zsh-async
+fi
+
+if [[ ! -a ~/.pure ]]; then
+  git clone https://github.com/sindresorhus/pure.git ~/.pure
+fi
+
+if [[ ! -a ~/.dircolors ]]; then
+  curl https://raw.githubusercontent.com/seebi/dircolors-solarized/master/dircolors.ansi-dark --output ~/.dircolors
+fi
+
+# if [[ ! -a ~/.rbenv ]]; then
+#     git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+# fi
+
+plugins=(common-aliases git git-extras zsh-autosuggestions zsh-completions)
 
 # User configuration
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -72,89 +97,51 @@ fi
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
-# zsh completions
-fpath=(/usr/local/share/zsh-completions $fpath)
-
 # helper application calls
-alias atom="atom ."
-alias code="code ."
-alias finder="open ."
-alias tower="gittower ."
-alias pweb="python -m SimpleHTTPServer"
-
-# force spotlight re-index
-alias sri="sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist && sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.metadata.mds.plist"
+alias web="python -m SimpleHTTPServer"
 
 # few little useful aliases
-alias mkdir="mkdir -pv"
-alias wget="wget -c"
+alias md="mkdir -pv"
+alias get="wget -c"
 alias vi="vim"
+alias e="tar -xvf"
 
-fn () {
-  killall flow
+function kn () {
   killall node
 }
 
-# nvm use on directory change
-cd () {
-  builtin cd $@ && checkNodeVersion
-}
-pushd () {
-  builtin pushd $@ && checkNodeVersion
-}
-popd () {
-  builtin popd $@ && checkNodeVersion
+function kp () {
+  sudo kill -9 $(sudo lsof -t -i:$@)
 }
 
 # docker
 # kill
-dkill () {
+function dkill () {
   if [[ ! -z $(docker ps -q) ]]; then
     docker kill $(docker ps -q)
   fi
 }
 
-# delete all stopped containers
-drm () {
-  if [[ ! -z $(docker ps -a -q) ]]; then
-    docker rm $(docker ps -a -q)
-  fi
-}
-
-# delete images, default "none", but can do everything
-drmi () {
-  docker system prune -a -f
-}
-
 # kill and delete containers/images
-dclean () {
-  dkill $@
-  drm $@
-  drmi $@
+function dclean () {
+  dkill
+  docker system prune -f
 }
 
 # docker-compose up shorthand
-dcup () {
+function dcup () {
   docker-compose up $@
 }
 
-# update development env
-devup () {
-  brew update
-  brew upgrade
-  brew cask upgrade
-  brew cleanup
-}
-
-nvmi () {
+function nvmi () {
   nvm install $@ --reinstall-packages-from=$(node --version)
 }
 
-nup () {
+function nup () {
   npx npm-check -u
 }
 
-yup () {
+function yup () {
   npx yarn-check -u
 }
 
@@ -176,73 +163,66 @@ for key in "${(@k)customPaths}"; do
   export PATH=$customPaths[$key]:$PATH
 done
 
-export PATH=$PATH
-
-# Defer initialization of the Fuck until the Fuck command is run. Ensure this block is only run once
-# if .zshrc gets sourced multiple times by checking whether initializeTheFuck is a function.
-if [ ! "$(type -f initializeTheFuck)" = function ]; then
-  theFuckCommands=(
-    fuck
-  )
-  initializeTheFuck () {
-    for cmd in "${theFuckCommands[@]}"; do
-      unalias $cmd;
-    done
-    eval $(thefuck --alias)
-    unset theFuckCommands
-    unset -f initializeTheFuck
-  }
-  for cmd in "${theFuckCommands[@]}"; do
-    alias $cmd='initializeTheFuck && '$cmd;
-  done
-fi
+export PATH="$(IFS=:; echo "${paths[*]}"):$PATH"
 
 eval $(thefuck --alias)
 
-export MONO_GAC_PREFIX="/usr/local"
+. ~/.zsh-async/async.zsh
 
-# uncommited stuffies
-. ~/.privates
+fpath+=("$HOME/.pure")
+autoload -U promptinit; promptinit
+zstyle :prompt:pure:path color yellow
+prompt pure
 
-# nvm
 export NVM_DIR="$HOME/.nvm"
-. "/usr/local/opt/nvm/nvm.sh"
+. "$NVM_DIR/nvm.sh" --no-use
 
-# # Defer initialization of nvm until nvm, node or a node-dependent command is
-# # run. Ensure this block is only run once if .zshrc gets sourced multiple times
-# # by checking whether initializeNVM is a function.
-# if [ ! "$(type -f initializeNVM)" = function ]; then
-#   nodeCommands=(
-#     babel
-#     flow
-#     gulp
-#     node
-#     npm
-#     npx
-#     nvm
-#     yarn
-#     webpack
-#   )
-#   initializeNVM () {
-#     for cmd in "${nodeCommands[@]}"; do
-#       unalias $cmd;
-#     done
-#     . "/usr/local/opt/nvm/nvm.sh"
-#     unset nodeCommands
-#     unset -f initializeNVM
-#   }
-#   for cmd in "${nodeCommands[@]}"; do
-#     alias $cmd='initializeNVM && '$cmd;
-#   done
-# fi
+# place this after nvm initialization!
+autoload -U add-zsh-hook
 
-# NVM Helpers
-checkNodeVersion () {
-  if [[ -f '.nvmrc' ]]; then
-    nvm use
+load-nvmrc() {
+  command -v nvm >/dev/null 2>&1 || return;
+
+  local node_version="$(nvm version)"
+  local nvmrc_path=".nvmrc"
+
+  if [ -f "$nvmrc_path" ]; then
+    local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+    if [ "$nvmrc_node_version" = "N/A" ]; then
+      nvm install
+    elif [ "$nvmrc_node_version" != "$node_version" ]; then
+      nvm use
+    fi
+  elif [ "$node_version" != "$(nvm version default)" ]; then
+    echo "reverting to nvm default version"
+    nvm use default
   fi
 }
+add-zsh-hook chpwd load-nvmrc
 
-checkNodeVersion
+eval `dircolors ~/.dircolors`
+# eval "$(rbenv init -)"
 
-. /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# export DOCKER_HOST=tcp://localhost:2375
+
+# Note: Bash on Windows does not currently apply umask properly.
+if [[ "$(umask)" = "0000" ]]; then
+  umask 0022
+fi
+
+# Start docker daemon automatically when logging in if not running.
+RUNNING_DOCKER=`ps aux | grep dockerd | grep -v grep`
+if [ -z "$RUNNING_DOCKER" ]; then
+    sudo service docker start
+fi
+
+/usr/bin/keychain --nogui $HOME/.ssh/id_rsa
+
+source $HOME/.keychain/$HOST-sh
+
+# start ssh-agent and include ssh-keys
+if [ -z "$SSH_AUTH_SOCK" ] ; then
+    eval `ssh-agent -s`
+    ssh-add
+fi
