@@ -6,16 +6,16 @@ mkdir -p ~/.vim/colors
 mkdir -p ~/.vscode/extensions
 mkdir -p ~/Library/Application\ Support/Code/User
 
-# create base files
-touch ~/.privates
+# # create base files
+# touch ~/.privates
 
-cat ~/.privates | grep -q 'NPM_TOKEN'
+# cat ~/.privates | grep -q 'NPM_TOKEN'
 
-if [[ $? != 0 ]]; then
-  echo "export NPM_TOKEN=00000000-0000-0000-0000-000000000000" >> ~/.privates
-fi
+# if [[ $? != 0 ]]; then
+#   echo "export NPM_TOKEN=00000000-0000-0000-0000-000000000000" >> ~/.privates
+# fi
 
-. ~/.privates
+# . ~/.privates
 
 # delete dotfile's if they are already present but not symlinks
 dotFiles=(
@@ -85,8 +85,6 @@ brewInstalls=(
   watchman
   wget
   zsh
-  zsh-autosuggestions
-  zsh-completions
 )
 
 # install some basic devtools

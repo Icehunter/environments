@@ -1,19 +1,13 @@
 // Place your settings in this file to overwrite the default settings
 {
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
   "breadcrumbs.enabled": true,
-  "csharp.format.enable": false,
-  "csharpfixformat.style.spaces.beforeParenthesis": false,
   "debug.inlineValues": true,
-  "debug.node.autoAttach": "on",
   "editor.codeActionsOnSave": {
-    "source.organizeImports": true
+    "source.organizeImports": true,
+    "source.fixAll": true
   },
-  "editor.fontFamily": "\"Fira Code\", Roboto, Menlo, Monaco, \"Courier New\", monospace",
+  "editor.fontFamily": "\"FiraCode NF\", \"FiraCode Nerd Font\", Roboto, Menlo, Monaco, \"Courier New\", monospace",
   "editor.fontLigatures": true,
-  "editor.formatOnSave": true,
   "editor.formatOnType": true,
   "editor.minimap.enabled": false,
   "editor.rulers": [
@@ -29,16 +23,12 @@
   "emmet.showExpandedAbbreviation": "never",
   "emmet.triggerExpansionOnTab": true,
   "eslint.alwaysShowStatus": true,
-  "eslint.autoFixOnSave": false,
   "eslint.packageManager": "yarn",
   "eslint.validate": [
     "javascript",
     "javascriptreact",
     "json",
-    {
-      "language": "typescript",
-      "autoFix": true
-    },
+    "typescript",
     "typescriptreact"
   ],
   "explorer.confirmDelete": false,
@@ -50,34 +40,24 @@
   },
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
-  "flow.enabled": false,
   "git.autofetch": true,
-  "git.path": "/usr/local/bin/git",
-  "javascript.implicitProjectConfig.checkJs": true,
   "javascript.updateImportsOnFileMove.enabled": "never",
   "liveshare.featureSet": "insiders",
   "material-icon-theme.folders.theme": "specific",
-  "npm.enableScriptExplorer": true,
   "prettier.arrowParens": "always",
   "prettier.jsxBracketSameLine": true,
   "prettier.jsxSingleQuote": true,
   "prettier.printWidth": 160,
   "prettier.singleQuote": true,
   "path-intellisense.autoSlashAfterDirectory": false,
-  "telemetry.enableCrashReporter": false,
-  "telemetry.enableTelemetry": false,
   "terminal.integrated.enableBell": true,
-  "typescript.updateImportsOnFileMove.enabled": "never",
-  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
-  "window.zoomLevel": 0,
-  "workbench.colorTheme": "Icehunter",
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.updateImportsOnFileMove.enabled": "always",
   "workbench.editor.highlightModifiedTabs": true,
-  "workbench.fontAliasing": "auto",
   "workbench.iconTheme": "material-icon-theme",
   "workbench.sideBar.location": "right",
-  "workbench.useExperimentalGridLayout": true,
   "workbench.view.alwaysShowHeaderActions": true,
-  "workbench.startupEditor": "newUntitledFile",
+  "workbench.startupEditor": "none",
   "peacock.favoriteColors": [
     {
       "name": "Angular Red",
@@ -127,5 +107,38 @@
       "name": "Vue Green",
       "value": "#42b883"
     }
-  ]
+  ],
+  "remote.SSH.remotePlatform": {
+    "ryan-wilson-L01.colo.rubrik.com": "linux",
+    "10.74.1.185": "macOS",
+    "20.104.255.134": "linux",
+    "192.168.1.185": "macOS",
+    "192.168.1.192": "macOS"
+  },
+  "editor.formatOnSave": true,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "npm.keybindingsChangedWarningShown": true,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "workbench.colorTheme": "Icehunter",
+  "clang-format.executable": "C:\\Program Files\\nodejs\\node_modules\\clang-format\\bin\\win32\\clang-format",
+  "clang-format.style": "{BasedOnStyle: Google, SortIncludes: Never}",
+  "editor.fontSize": 12,
+  "[python]": {
+    "editor.formatOnType": true
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "gitlens.showWelcomeOnInstall": false,
+  "gitlens.showWhatsNewAfterUpgrades": false
 }

@@ -106,6 +106,14 @@ alias get="wget -c"
 alias vi="vim"
 alias e="tar -xvf"
 
+function code () {
+  if [[ $# -eq 0 ]]; then
+    /usr/local/bin/code .
+  else
+    /usr/local/bin/code $@
+  fi
+}
+
 function kn () {
   killall node
 }
@@ -169,13 +177,17 @@ eval $(thefuck --alias)
 
 . ~/.zsh-async/async.zsh
 
-fpath+=("$HOME/.pure")
-autoload -U promptinit; promptinit
-zstyle :prompt:pure:path color yellow
-prompt pure
+# fpath+=("$HOME/.pure")
+# autoload -U promptinit; promptinit
+# zstyle :prompt:pure:path color yellow
+# prompt pure
+
+if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
+  eval "$(oh-my-posh init zsh)"
+fi
 
 export NVM_DIR="$HOME/.nvm"
-. "$NVM_DIR/nvm.sh" --no-use
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh" # This loads nvm
 
 # place this after nvm initialization!
 autoload -U add-zsh-hook
@@ -201,28 +213,11 @@ load-nvmrc() {
 }
 add-zsh-hook chpwd load-nvmrc
 
-eval `dircolors ~/.dircolors`
-# eval "$(rbenv init -)"
-
-# export DOCKER_HOST=tcp://localhost:2375
-
-# Note: Bash on Windows does not currently apply umask properly.
-if [[ "$(umask)" = "0000" ]]; then
-  umask 0022
-fi
-
-# Start docker daemon automatically when logging in if not running.
-RUNNING_DOCKER=`ps aux | grep dockerd | grep -v grep`
-if [ -z "$RUNNING_DOCKER" ]; then
-    sudo service docker start
-fi
-
-/usr/bin/keychain --nogui $HOME/.ssh/id_rsa
-
-source $HOME/.keychain/$HOST-sh
-
-# start ssh-agent and include ssh-keys
-if [ -z "$SSH_AUTH_SOCK" ] ; then
-    eval `ssh-agent -s`
-    ssh-add
+if whence dircolors >/dev/null; then
+  eval `dircolors ~/.dircolors`
+  zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+  alias ls='ls --color'
+else
+  export CLICOLOR=1
+  zstyle ':completion:*:default' list-colors ''
 fi
